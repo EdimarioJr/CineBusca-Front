@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from "styled-components";
 
+
 export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
@@ -38,4 +39,5 @@ export const CommonButton = styled.button`
   font-weight: 700;
   height: 35px;
   border: none;
+  cursor: pointer;
 `;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { CommonButton, FlexRowBetween } from "../../commonStyle";
 
 export const DivSearch = styled.div`
   width: 60%;
