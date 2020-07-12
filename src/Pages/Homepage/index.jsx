@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Container } from "./commonStyle";
-import Header from "./Components/Header";
-import CineCarousel from "./Components/Carousel";
-import MovieCard from "./Components/MovieCard";
-import movieApi from "./config/movieApi";
-import NoImage from "./assets/no-image.jpg";
-import { CommonButton } from "./commonStyle";
-import { background } from "./assets/background.png";
+import { Container } from "../../commonStyle";
+import Header from "../../Components/Header";
+import CineCarousel from "../../Components/Carousel";
+import MovieCard from "../../Components/MovieCard";
+import movieApi from "../../config/movieApi";
+import NoImage from "../../assets/no-image.jpg"
+import { CommonButton } from "../../commonStyle";
 
 const Main = styled.section`
   width: 100%;
