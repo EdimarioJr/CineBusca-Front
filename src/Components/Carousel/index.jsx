@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Carousel from "nuka-carousel";
 import movieApi from "../../config/movieApi";
+import { Link } from "react-router-dom";
 
 const DivCarousel = styled.div`
   width: 100%;
@@ -47,13 +48,18 @@ const CineCarousel = () => {
         >
           {movies.map((movie, index) => {
             return (
-              <img
-                src={`https://image.tmdb.org/t/p/original/${
-                  movie.poster_path ? movie.poster_path : movie.backdrop_path
-                }`}
-                alt={movie.original_title}
+              <Link
+                to={`/Movie/${movie.id}`}
                 key={index}
-              />
+                style={{ textDecoration: "none" }}
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/original/${
+                    movie.poster_path ? movie.poster_path : movie.backdrop_path
+                  }`}
+                  alt={movie.original_title}
+                />
+              </Link>
             );
           })}
         </Carousel>

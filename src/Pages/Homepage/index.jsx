@@ -5,8 +5,9 @@ import Header from "../../Components/Header";
 import CineCarousel from "../../Components/Carousel";
 import MovieCard from "../../Components/MovieCard";
 import movieApi from "../../config/movieApi";
-import NoImage from "../../assets/no-image.jpg"
+import NoImage from "../../assets/no-image.jpg";
 import { CommonButton } from "../../commonStyle";
+import { Link } from "react-router-dom";
 
 const Main = styled.section`
   width: 100%;
@@ -52,6 +53,7 @@ function App() {
           }
         });
     })();
+    // eslint-disable-next-line
   }, [page]);
 
   return (
@@ -65,16 +67,21 @@ function App() {
           <section className="grid-movies">
             {movies.map((movie, index) => {
               return (
-                <MovieCard
-                  title={movie.original_title}
-                  score={movie.vote_average}
-                  poster={
-                    movie.poster_path
-                      ? `https://image.tmdb.org/t/p/w185/${movie.poster_path}`
-                      : NoImage
-                  }
+                <Link
+                  to={`/Movie/${movie.id}`}
                   key={index}
-                />
+                  style={{ textDecoration: "none" }}
+                >
+                  <MovieCard
+                    title={movie.original_title}
+                    score={movie.vote_average}
+                    poster={
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w185/${movie.poster_path}`
+                        : NoImage
+                    }
+                  />
+                </Link>
               );
             })}
           </section>
