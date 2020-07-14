@@ -3,6 +3,7 @@ import { Container, CommonButton } from "../../commonStyle";
 import { HeaderRow, InputsRow, DivSearch, WatchlistButton } from "./style";
 import { Link } from "react-router-dom";
 import CineBuscaLogo from "../../assets/cinebusca.png";
+import auth from "../../config/auth";
 
 const Header = () => {
   return (
@@ -19,6 +20,11 @@ const Header = () => {
           <WatchlistButton>WATCH</WatchlistButton>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <CommonButton>SIGN IN</CommonButton>
+            {auth.isAuthenticated() ? (
+              <CommonButton onClick={auth.logout}>LogOut</CommonButton>
+            ) : (
+              ""
+            )}
           </Link>
         </InputsRow>
       </HeaderRow>

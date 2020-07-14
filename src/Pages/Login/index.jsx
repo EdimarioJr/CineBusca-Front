@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import { Container, CommonButton } from "../../commonStyle";
 import Header from "../../Components/Header";
+import dbAPI from "../../config/dbAPI";
+import auth from '../../config/auth'
 
 const LoginContainer = styled.main`
   width: 100%;
@@ -45,6 +48,20 @@ const LoginContainer = styled.main`
 const Login = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
+
+  function handleSubmit() {
+    console.log(name, password);
+    name && password
+      ? dbAPI.post("/signin", { name, password }).then((response) => {
+          const data = response.data;
+          if (data.signin) {
+            auth.login(data.token)
+            history.push("/");
+          } else alert(data.message);
+        })
+      : alert("Preencha todos os campos!");
+  }
 
   return (
     <>
@@ -75,7 +92,7 @@ const Login = () => {
                 />
               </div>
             </form>
-            <CommonButton>Sign in</CommonButton>
+            <CommonButton onClick={handleSubmit}>Sign in</CommonButton>
           </div>
         </LoginContainer>
       </Container>
