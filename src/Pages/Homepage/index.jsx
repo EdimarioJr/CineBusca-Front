@@ -30,7 +30,7 @@ const LoadMore = styled(CommonButton)`
   width: 100%;
   margin: 30px 0;
   padding: 30px 0;
-  font-weight: 500;
+  font-weight: 700;
   font-size: 24px;
 `;
 
@@ -77,7 +77,7 @@ function App() {
                     score={movie.vote_average}
                     poster={
                       movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w185/${movie.poster_path}`
+                        ? `https://image.tmdb.org/t/p/w342/${movie.poster_path}`
                         : NoImage
                     }
                   />

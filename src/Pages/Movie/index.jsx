@@ -5,16 +5,25 @@ import { Container } from "../../commonStyle";
 import MovieDetail from "../../Components/MovieDetail";
 import Header from "../../Components/Header";
 import NoImage from "../../assets/no-image.jpg";
+import MovieCard from "../../Components/MovieCard";
+import { Link } from "react-router-dom";
 
 const CastContainer = styled.section`
   background-color: black;
   width: 100%;
   padding: 30px;
+
+  h1 {
+    color: white;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
 `;
 const Cast = styled.div`
   display: flex;
   flex-direction: row;
-  overflow: scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
 
   .actorCard {
     margin-right: 30px;
@@ -29,23 +38,43 @@ const Cast = styled.div`
 
     p {
       padding: 5px 10px;
-      text-overflow: ellipsis;
-      overflow: hide;
     }
+  }
+`;
+
+const RecommendationsContainer = styled.section`
+  width: 100%;
+  margin: 30px 0;
+  
+
+  h1 {
+    margin-bottom: 20px;
+    color: white;
+  }
+
+  span {
+    color: #107ee5;
+  }
+
+  .recommendation-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
   }
 `;
 
 const Movie = (props) => {
   const [movie, setMovie] = useState(null);
   const [actors, setActors] = useState([]);
-  const [id, setId] = useState(props.match.params.id);
+  const [recommendations, setRecommendations] = useState([]);
+  const id = props.match.params.id;
 
   useEffect(() => {
     (async () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
       movieApi
         .get(`movie/${id}?api_key=${process.env.REACT_APP_MOVIE_API}`)
         .then((response) => {
-          console.log(response.data);
           setMovie(response.data);
           movieApi
             .get(
@@ -53,6 +82,13 @@ const Movie = (props) => {
             )
             .then((response) => {
               setActors(response.data.cast);
+            });
+          movieApi
+            .get(
+              `movie/${id}/recommendations?api_key=${process.env.REACT_APP_MOVIE_API}`
+            )
+            .then((response) => {
+              setRecommendations(response.data.results);
               console.log(response.data);
             });
         });
@@ -67,7 +103,7 @@ const Movie = (props) => {
           <>
             <MovieDetail movieInfo={movie} />
             <CastContainer>
-              <h1>Actors</h1>
+              <h1>Cast</h1>
               <Cast>
                 {actors.map((actor, index) => {
                   return (
@@ -81,13 +117,41 @@ const Movie = (props) => {
                         alt={actor.name}
                       />
                       <p>
-                        {actor.name} as {actor.character}
+                        <b>{actor.name}</b> as <b>{actor.character}</b>
                       </p>
                     </div>
                   );
                 })}
               </Cast>
             </CastContainer>
+            <RecommendationsContainer>
+              <h1>
+                If you like <span>{movie.original_title}</span>, you would like
+                these...
+              </h1>
+              <div className="recommendation-grid">
+                {recommendations.slice(0, 8).map((movie, index) => {
+                  return (
+                    <Link
+                      to={`/Movie/${movie.id}`}
+                      key={index}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <MovieCard
+                        title={movie.original_title}
+                        score={movie.vote_average}
+                        poster={
+                          movie.poster_path
+                            ? `https://image.tmdb.org/t/p/w342/${movie.poster_path}`
+                            : NoImage
+                        }
+                        key={index}
+                      />
+                    </Link>
+                  );
+                })}
+              </div>
+            </RecommendationsContainer>
           </>
         ) : (
           ""

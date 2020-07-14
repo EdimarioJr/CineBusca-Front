@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 const MovieContainer = styled.div`
   background-color: #383d48;
   color: white;
-  width: 100%;
+  width: 275px;
+  height: 460px;
   border-radius: 7px;
 
   &:hover {
@@ -29,8 +30,9 @@ const MovieContainer = styled.div`
     padding-right: 10px;
 
     p {
-      margin-bottom: 10px;
       text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
 `;
