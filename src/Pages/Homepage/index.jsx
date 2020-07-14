@@ -48,7 +48,6 @@ function App() {
           if (page === 2) setMovies(response.data.results);
           else {
             const newMovies = [...movies, ...response.data.results];
-            console.log(newMovies);
             setMovies(newMovies);
           }
         });
@@ -58,7 +57,6 @@ function App() {
 
   return (
     <>
-      {console.log(movies)}
       <Header />
       <CineCarousel />
       <Container>

@@ -17,7 +17,9 @@ const Header = () => {
             <button>Go!</button>
           </DivSearch>
           <WatchlistButton>WATCH</WatchlistButton>
-          <CommonButton>SIGN IN</CommonButton>
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <CommonButton>SIGN IN</CommonButton>
+          </Link>
         </InputsRow>
       </HeaderRow>
     </Container>
