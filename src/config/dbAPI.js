@@ -7,7 +7,7 @@ const dbAPI = axios.create({
 
 dbAPI.interceptors.request.use(async (config) => {
   const token = auth.getToken();
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (token) config.headers.authorization = token;
   return config;
 });
 

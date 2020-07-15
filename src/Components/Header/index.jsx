@@ -17,11 +17,15 @@ const Header = () => {
             <input type="text" placeholder="Search by film title" />
             <button>Go!</button>
           </DivSearch>
-          <WatchlistButton>WATCH</WatchlistButton>
+          <Link to="/watchlist" style={{ textDecoration: "none" }}>
+            <WatchlistButton>WATCH</WatchlistButton>
+          </Link>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <CommonButton>SIGN IN</CommonButton>
             {auth.isAuthenticated() ? (
-              <CommonButton onClick={auth.logout}>LogOut</CommonButton>
+              <CommonButton onClick={auth.logout} style={{ marginTop: "10px" }}>
+                LOGOUT
+              </CommonButton>
             ) : (
               ""
             )}
