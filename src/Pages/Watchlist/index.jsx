@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import MovieCard from "../../Components/MovieCard";
-import jwtDecode from "jwt-decode";
-import auth from "../../config/auth";
+import authentication from "../../config/auth";
 import { useHistory, Link } from "react-router-dom";
 import dbAPI from "../../config/dbAPI";
+import movieApi from "../../config/movieApi";
 import NoImage from "../../assets/no-image.jpg";
 import Header from "../../Components/Header";
 import { Container } from "../../commonStyle";
@@ -19,7 +19,7 @@ const WatchlistContainer = styled.main`
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(1, 4fr);
+    grid-template-columns: repeat(4,1fr);
     grid-gap: 20px;
   }
 `;
@@ -30,13 +30,21 @@ const Watchlist = () => {
 
   useEffect(() => {
     (async () => {
-      dbAPI.get("/watchlist").then((response) => {
-        const { watchlist, auth, message } = response.data;
+      dbAPI.get("/watchlist").then(async (response) => {
+        let { watchlist, auth, message } = response.data;
         if (auth) {
-          setMovies(watchlist);
+          let moviesWatchlist = await Promise.all(
+            watchlist.map(async (current) => {
+              let aux = await movieApi.get(
+                `movie/${current}?api_key=${process.env.REACT_APP_MOVIE_API}`
+              );
+              return aux.data;
+            })
+          );
+          setMovies(moviesWatchlist);
         } else {
           alert(message);
-          auth.logout();
+          authentication.logout();
           history.push("/");
         }
       });
@@ -45,12 +53,12 @@ const Watchlist = () => {
 
   return (
     <>
+      {console.log(movies)}
       <Header />
       <Container>
         <WatchlistContainer>
           <h1>My Watchlist</h1>
           <section className="grid">
-          {console.log(movies)}
             {movies.length ? (
               movies.map((movie, index) => {
                 return (

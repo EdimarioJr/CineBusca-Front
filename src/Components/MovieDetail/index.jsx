@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { CommonButton } from "../../commonStyle";
+import dbAPI from "../../config/dbAPI";
 
 const MovieContainer = styled.section`
   width: 100%;
@@ -41,7 +42,8 @@ const MovieInfo = styled.div`
     height: calc(100% - 85px);
     position: inherit;
     z-index: 2;
-    text-shadow: 1px 1px rgba(0,0,0,0.5), -1px 1px rgba(0,0,0,0.5), 1px -1px rgba(0,0,0,0.5), -1px -1px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.5), -1px 1px rgba(0, 0, 0, 0.5),
+      1px -1px rgba(0, 0, 0, 0.5), -1px -1px rgba(0, 0, 0, 0.5);
     h1 {
       margin-bottom: 20px;
       font-size: 30px;
@@ -54,7 +56,7 @@ const MovieInfo = styled.div`
       line-height: 30px;
       height: 300px;
       text-overflow: ellipsis;
-      overflow:auto;
+      overflow: auto;
       font-size: 24px;
     }
 
@@ -102,7 +104,9 @@ const WatchButton = styled(CommonButton)`
 `;
 
 const MovieDetail = (props) => {
+  const [inWatchlist, setInWatchlist] = useState(false);
   const {
+    id,
     poster_path,
     title,
     vote_average,
@@ -112,6 +116,34 @@ const MovieDetail = (props) => {
     overview,
     release_date,
   } = props.movieInfo;
+
+  useEffect(() => {
+    (async () => {
+      dbAPI.get("/watchlist").then((response) => {
+        const { watchlist } = response.data;
+        if (watchlist) {
+          if (watchlist.includes(String(id))) {
+            setInWatchlist(true);
+          }
+        }
+      });
+    })();
+  }, []);
+
+  async function handleAddWatchlist() {
+    if (inWatchlist) {
+      await dbAPI
+        .delete("/watchlist", { params: { idMovie: id } })
+        .then((response) => console.log(response.data));
+      setInWatchlist(false);
+    } else {
+      await dbAPI
+        .post("/watchlist", { idMovie: id })
+        .then((response) => console.log(response.data));
+      setInWatchlist(true);
+    }
+  }
+
   return (
     <>
       <MovieContainer>
@@ -127,7 +159,9 @@ const MovieDetail = (props) => {
           />
           <section className="info">
             <h1>{title}</h1>
-            <WatchButton>Add to your Watchlist</WatchButton>
+            <WatchButton onClick={handleAddWatchlist}>
+              {inWatchlist ? "Remove from Watchlist" : "Add to your Watchlist"}
+            </WatchButton>
             <h2>{vote_average}</h2>
             <p className="description">{overview}</p>
             <div className="genres">
