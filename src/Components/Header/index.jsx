@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, CommonButton } from "../../commonStyle";
 import { HeaderRow, InputsRow, DivSearch, WatchlistButton } from "./style";
 import { Link } from "react-router-dom";
@@ -6,6 +6,13 @@ import CineBuscaLogo from "../../assets/cinebusca.png";
 import auth from "../../config/auth";
 
 const Header = () => {
+  const [loginOn, setLoginOn] = useState(auth.isAuthenticated());
+
+  function handleLogout() {
+    auth.logout();
+    setLoginOn(false);
+  }
+
   return (
     <Container>
       <HeaderRow>
@@ -17,19 +24,21 @@ const Header = () => {
             <input type="text" placeholder="Search by film title" />
             <button>Go!</button>
           </DivSearch>
-          <Link to="/watchlist" style={{ textDecoration: "none" }}>
-            <WatchlistButton>WATCH</WatchlistButton>
-          </Link>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <CommonButton>SIGN IN</CommonButton>
-            {auth.isAuthenticated() ? (
-              <CommonButton onClick={auth.logout} style={{ marginTop: "10px" }}>
-                LOGOUT
-              </CommonButton>
-            ) : (
-              ""
-            )}
-          </Link>
+          {loginOn ? (
+            <Link to="/watchlist" style={{ textDecoration: "none" }}>
+              <WatchlistButton>WATCH</WatchlistButton>
+            </Link>
+          ) : (
+            ""
+          )}
+
+          {loginOn ? (
+            <CommonButton onClick={handleLogout}>LOGOUT</CommonButton>
+          ) : (
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <CommonButton>SIGN IN</CommonButton>
+            </Link>
+          )}
         </InputsRow>
       </HeaderRow>
     </Container>

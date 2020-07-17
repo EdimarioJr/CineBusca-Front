@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { CommonButton } from "../../commonStyle";
 import dbAPI from "../../config/dbAPI";
+import auth from "../../config/auth";
 
 const MovieContainer = styled.section`
   width: 100%;
@@ -159,9 +160,16 @@ const MovieDetail = (props) => {
           />
           <section className="info">
             <h1>{title}</h1>
-            <WatchButton onClick={handleAddWatchlist}>
-              {inWatchlist ? "Remove from Watchlist" : "Add to your Watchlist"}
-            </WatchButton>
+            {auth.getToken() ? (
+              <WatchButton onClick={handleAddWatchlist}>
+                {inWatchlist
+                  ? "Remove from Watchlist"
+                  : "Add to your Watchlist"}
+              </WatchButton>
+            ) : (
+              ""
+            )}
+
             <h2>{vote_average}</h2>
             <p className="description">{overview}</p>
             <div className="genres">

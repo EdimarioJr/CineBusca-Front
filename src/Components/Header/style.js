@@ -33,8 +33,12 @@ export const HeaderRow = styled(FlexRowBetween)`
   }
 `;
 
-export const InputsRow = styled(FlexRowBetween)`
-  width: 45%;
+export const InputsRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 60%;
 `;
 
 export const WatchlistButton = styled(CommonButton)`
