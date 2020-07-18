@@ -1,10 +1,10 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { Container, CommonButton } from "../../commonStyle";
 import Header from "../../Components/Header";
 import dbAPI from "../../config/dbAPI";
-import auth from '../../config/auth'
+import auth from "../../config/auth";
 
 const LoginContainer = styled.main`
   width: 100%;
@@ -51,12 +51,12 @@ const Login = () => {
   const history = useHistory();
 
   function handleSubmit() {
-    console.log(name, password);
+    const nameTrim = name.trim();
     name && password
-      ? dbAPI.post("/signin", { name, password }).then((response) => {
+      ? dbAPI.post("/signin", { nameTrim, password }).then((response) => {
           const data = response.data;
           if (data.signin) {
-            auth.login(data.token)
+            auth.login(data.token);
             history.push("/");
           } else alert(data.message);
         })

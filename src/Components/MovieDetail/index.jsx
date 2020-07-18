@@ -117,7 +117,6 @@ const MovieDetail = (props) => {
     overview,
     release_date,
   } = props.movieInfo;
-
   useEffect(() => {
     (async () => {
       dbAPI.get("/watchlist").then((response) => {
@@ -125,11 +124,12 @@ const MovieDetail = (props) => {
         if (watchlist) {
           if (watchlist.includes(String(id))) {
             setInWatchlist(true);
-          }
+          } else setInWatchlist(false);
         }
       });
     })();
-  }, []);
+    //eslint-disable-next-line
+  }, [props.movieInfo]);
 
   async function handleAddWatchlist() {
     if (inWatchlist) {
@@ -156,7 +156,7 @@ const MovieDetail = (props) => {
 
         <MovieInfo>
           <BackgroundFilter
-            back={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+            back={`https://image.tmdb.org/t/p/w185/${poster_path}`}
           />
           <section className="info">
             <h1>{title}</h1>

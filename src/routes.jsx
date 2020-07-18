@@ -4,6 +4,7 @@ import Homepage from "./Pages/Homepage";
 import Movie from "./Pages/Movie";
 import Watchlist from "./Pages/Watchlist";
 import Login from "./Pages/Login";
+import Search from './Pages/Search'
 import auth from "./config/auth";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/Movie/:id" component={Movie} />
         <PrivateRoute path="/watchlist" component={Watchlist} />
         <Route path="/login" component={Login} />
+        <Route path="/search" component={Search}/>
       </Switch>
     </BrowserRouter>
   );

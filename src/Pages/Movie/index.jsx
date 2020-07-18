@@ -6,7 +6,7 @@ import MovieDetail from "../../Components/MovieDetail";
 import Header from "../../Components/Header";
 import NoImage from "../../assets/no-image.jpg";
 import MovieCard from "../../Components/MovieCard";
-import { Link } from "react-router-dom";
+import Carousel from "../../Components/Carousel";
 
 const CastContainer = styled.section`
   background-color: black;
@@ -15,7 +15,7 @@ const CastContainer = styled.section`
 
   h1 {
     color: white;
-    margin-top: 40px;
+    margin-top: 1 0px;
     margin-bottom: 20px;
   }
 `;
@@ -42,10 +42,16 @@ const Cast = styled.div`
   }
 `;
 
+const Gallery = styled.section`
+  width: 100%;
+  height: 600px;
+  margin: 20px 0;
+  background-color: black;
+`;
+
 const RecommendationsContainer = styled.section`
   width: 100%;
   margin: 30px 0;
-  
 
   h1 {
     margin-bottom: 20px;
@@ -76,21 +82,18 @@ const Movie = (props) => {
         .get(`movie/${id}?api_key=${process.env.REACT_APP_MOVIE_API}`)
         .then((response) => {
           setMovie(response.data);
-          movieApi
-            .get(
-              `movie/${id}/credits?api_key=${process.env.REACT_APP_MOVIE_API}`
-            )
-            .then((response) => {
-              setActors(response.data.cast);
-            });
-          movieApi
-            .get(
-              `movie/${id}/recommendations?api_key=${process.env.REACT_APP_MOVIE_API}`
-            )
-            .then((response) => {
-              setRecommendations(response.data.results);
-              console.log(response.data);
-            });
+        });
+      movieApi
+        .get(`movie/${id}/credits?api_key=${process.env.REACT_APP_MOVIE_API}`)
+        .then((response) => {
+          setActors(response.data.cast);
+        });
+      movieApi
+        .get(
+          `movie/${id}/recommendations?api_key=${process.env.REACT_APP_MOVIE_API}`
+        )
+        .then((response) => {
+          setRecommendations(response.data.results);
         });
     })();
   }, [id]);
@@ -124,6 +127,9 @@ const Movie = (props) => {
                 })}
               </Cast>
             </CastContainer>
+            <Gallery>
+              <Carousel idMovie={id} />
+            </Gallery>
             <RecommendationsContainer>
               <h1>
                 If you like <span>{movie.original_title}</span>, you would like
@@ -132,22 +138,13 @@ const Movie = (props) => {
               <div className="recommendation-grid">
                 {recommendations.slice(0, 8).map((movie, index) => {
                   return (
-                    <Link
-                      to={`/Movie/${movie.id}`}
+                    <MovieCard
+                      idMovie={movie.id}
+                      title={movie.original_title}
+                      score={movie.vote_average}
+                      poster={movie.poster_path}
                       key={index}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <MovieCard
-                        title={movie.original_title}
-                        score={movie.vote_average}
-                        poster={
-                          movie.poster_path
-                            ? `https://image.tmdb.org/t/p/w342/${movie.poster_path}`
-                            : NoImage
-                        }
-                        key={index}
-                      />
-                    </Link>
+                    />
                   );
                 })}
               </div>

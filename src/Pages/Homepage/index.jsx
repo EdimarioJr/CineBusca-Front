@@ -5,9 +5,7 @@ import Header from "../../Components/Header";
 import CineCarousel from "../../Components/Carousel";
 import MovieCard from "../../Components/MovieCard";
 import movieApi from "../../config/movieApi";
-import NoImage from "../../assets/no-image.jpg";
 import { CommonButton } from "../../commonStyle";
-import { Link } from "react-router-dom";
 
 const Main = styled.section`
   width: 100%;
@@ -65,21 +63,13 @@ function App() {
           <section className="grid-movies">
             {movies.map((movie, index) => {
               return (
-                <Link
-                  to={`/Movie/${movie.id}`}
+                <MovieCard
                   key={index}
-                  style={{ textDecoration: "none" }}
-                >
-                  <MovieCard
-                    title={movie.original_title}
-                    score={movie.vote_average}
-                    poster={
-                      movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w342/${movie.poster_path}`
-                        : NoImage
-                    }
-                  />
-                </Link>
+                  idMovie={movie.id}
+                  title={movie.original_title}
+                  score={movie.vote_average}
+                  poster={movie.poster_path}
+                />
               );
             })}
           </section>

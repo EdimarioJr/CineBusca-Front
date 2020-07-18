@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import MovieCard from "../../Components/MovieCard";
 import authentication from "../../config/auth";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import dbAPI from "../../config/dbAPI";
 import movieApi from "../../config/movieApi";
-import NoImage from "../../assets/no-image.jpg";
 import Header from "../../Components/Header";
 import { Container, CommonButton } from "../../commonStyle";
 
@@ -48,7 +47,6 @@ const Watchlist = () => {
       const newMovies = movies.filter((movie) => {
         return movie.id !== Number(idMovie);
       });
-      console.log(newMovies);
       setMovies(newMovies);
     } else {
       alert("Você não tem permissão para fazer essa operação!");
@@ -77,11 +75,11 @@ const Watchlist = () => {
         }
       });
     })();
+    //eslint-disable-next-line
   }, []);
 
   return (
     <>
-      {console.log(movies)}
       <Header />
       <Container>
         <WatchlistContainer>
@@ -91,20 +89,12 @@ const Watchlist = () => {
               movies.map((movie, index) => {
                 return (
                   <div className="card" key={index}>
-                    <Link
-                      to={`/Movie/${movie.id}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <MovieCard
-                        title={movie.original_title}
-                        score={movie.vote_average}
-                        poster={
-                          movie.poster_path
-                            ? `https://image.tmdb.org/t/p/w342/${movie.poster_path}`
-                            : NoImage
-                        }
-                      />
-                    </Link>
+                    <MovieCard
+                      idMovie={movie.id}
+                      title={movie.original_title}
+                      score={movie.vote_average}
+                      poster={movie.poster_path}
+                    />
                     <RemoveButton id={movie.id} onClick={handleRemove}>
                       Remove from watchlist
                     </RemoveButton>
