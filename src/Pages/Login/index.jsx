@@ -1,49 +1,10 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import { LoginContainer } from "./style";
 import { useHistory } from "react-router-dom";
 import { Container, CommonButton } from "../../commonStyle";
 import Header from "../../Components/Header";
-import dbAPI from "../../config/dbAPI";
-import auth from "../../config/auth";
-
-const LoginContainer = styled.main`
-  width: 100%;
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  .card {
-    color: white;
-    height: 600px;
-    background-color: #383d48;
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    align-items: center;
-    justify-content: center;
-
-    div {
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      margin-bottom: 40px;
-    }
-
-    form {
-      margin-bottom: 30px;
-      width: 70%;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px 0;
-      padding-left: 10px;
-    }
-  }
-`;
+import dbAPI from "../../services/dbAPI";
+import auth from "../../services/auth";
 
 const Login = () => {
   const [name, setName] = useState("");

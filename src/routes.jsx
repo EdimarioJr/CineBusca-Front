@@ -5,7 +5,7 @@ import Movie from "./Pages/Movie";
 import Watchlist from "./Pages/Watchlist";
 import Login from "./Pages/Login";
 import Search from './Pages/Search'
-import auth from "./config/auth";
+import auth from "./services/auth";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route

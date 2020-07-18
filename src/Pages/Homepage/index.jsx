@@ -1,36 +1,11 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import { Main } from "./style";
 import { Container } from "../../commonStyle";
 import Header from "../../Components/Header";
 import CineCarousel from "../../Components/Carousel";
 import MovieCard from "../../Components/MovieCard";
-import movieApi from "../../config/movieApi";
-import { CommonButton } from "../../commonStyle";
-
-const Main = styled.section`
-  width: 100%;
-
-  h1 {
-    color: white;
-    margin: 30px 0;
-    font-size: 36px;
-  }
-
-  .grid-movies {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
-    transition: all 0.5s;
-  }
-`;
-
-const LoadMore = styled(CommonButton)`
-  width: 100%;
-  margin: 30px 0;
-  padding: 30px 0;
-  font-weight: 700;
-  font-size: 24px;
-`;
+import movieApi from "../../services/movieApi";
+import { LoadMore } from "../../commonStyle";
 
 function App() {
   const [movies, setMovies] = useState([]);

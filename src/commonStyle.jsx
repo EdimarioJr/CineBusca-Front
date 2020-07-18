@@ -41,3 +41,11 @@ export const CommonButton = styled.button`
   border: none;
   cursor: pointer;
 `;
+
+export const LoadMore = styled(CommonButton)`
+  width: 100%;
+  margin: 30px 0;
+  padding: 30px 0;
+  font-weight: 700;
+  font-size: 24px;
+`;

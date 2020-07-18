@@ -1,5 +1,5 @@
 import axios from "axios";
-import auth from "../config/auth";
+import auth from "./auth";
 
 const dbAPI = axios.create({
   baseURL: process.env.REACT_APP_API_URL,

@@ -1,36 +1,12 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import Header from "../../Components/Header";
-import { Container } from "../../commonStyle";
-import movieApi from "../../config/movieApi";
+import { Container, LoadMore } from "../../commonStyle";
+import movieApi from "../../services/movieApi";
 import MovieCard from "../../Components/MovieCard";
-import { CommonButton } from "../../commonStyle";
+import { SearchContainer } from "./style";
 
-const SearchContainer = styled.main`
-  width: 100%;
-
-  h1 {
-    color: white;
-    margin-bottom: 30px;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
-  }
-`;
-
-const LoadMore = styled(CommonButton)`
-  width: 100%;
-  margin: 30px 0;
-  padding: 30px 0;
-  font-weight: 700;
-  font-size: 24px;
-`;
-
-const SearchResults = (props) => {
+const SearchResults = () => {
   const [movies, setMovies] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [actualPage, setActualPage] = useState(1);
@@ -38,7 +14,7 @@ const SearchResults = (props) => {
 
   useEffect(() => {
     setActualPage(1);
-    setMovies([])
+    setMovies([]);
   }, [location.search]);
 
   useEffect(() => {

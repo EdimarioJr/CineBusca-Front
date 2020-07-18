@@ -3,7 +3,7 @@ import { Container, CommonButton } from "../../commonStyle";
 import { HeaderRow, InputsRow, DivSearch, WatchlistButton } from "./style";
 import { Link } from "react-router-dom";
 import CineBuscaLogo from "../../assets/cinebusca.png";
-import auth from "../../config/auth";
+import auth from "../../services/auth";
 import {useHistory} from 'react-router-dom'
 
 const Header = () => {

@@ -1,23 +1,8 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import movieApi from "../../config/movieApi";
+import { DivCarousel } from "./style";
+import movieApi from "../../services/movieApi";
 import Carousel from "nuka-carousel";
-
 import { Link } from "react-router-dom";
-
-const DivCarousel = styled.div`
-  width: 100%;
-  height: 600px;
-  backdrop-filter: blur(2px);
-
-  h1 {
-    margin: 20px 0;
-  }
-
-  img {
-    height: 600px;
-  }
-`;
 
 const CineCarousel = (props) => {
   const [movies, setMovies] = useState([]);
