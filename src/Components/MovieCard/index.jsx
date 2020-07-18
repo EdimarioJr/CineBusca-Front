@@ -40,7 +40,6 @@ const MovieContainer = styled.div`
 `;
 
 const MovieCard = (props) => {
-  console.log(props.idMovie);
   return (
     <Link to={`/Movie/${props.idMovie}`} style={{ textDecoration: "none" }}>
       <MovieContainer>
