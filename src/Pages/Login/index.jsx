@@ -7,20 +7,32 @@ import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 
 const Login = () => {
-  const [name, setName] = useState("");
+  const [nameUser, setNameUser] = useState("");
   const [password, setPassword] = useState("");
+  const [signUp, setSignUp] = useState(false);
   const history = useHistory();
 
   function handleSubmit() {
-    const nameTrim = name.trim();
+    const name = nameUser.trim();
     name && password
-      ? dbAPI.post("/signin", { nameTrim, password }).then((response) => {
-          const data = response.data;
-          if (data.signin) {
-            auth.login(data.token);
-            history.push("/");
-          } else alert(data.message);
-        })
+      ? signUp
+        ? dbAPI.post("/signup", { name, password }).then((response) => {
+            const data = response.data;
+            if (data.signup) {
+              dbAPI.post("/signin", { name, password }).then((response) => {
+                const data = response.data;
+                auth.login(data.token);
+                history.push("/");
+              });
+            } else alert(data.message);
+          })
+        : dbAPI.post("/signin", { name, password }).then((response) => {
+            const data = response.data;
+            if (data.signin) {
+              auth.login(data.token);
+              history.push("/");
+            } else alert(data.message);
+          })
       : alert("Preencha todos os campos!");
   }
 
@@ -30,7 +42,7 @@ const Login = () => {
       <Container>
         <LoginContainer>
           <div className="card">
-            <h1>Sign in</h1>
+            <h1>{signUp ? "Sign up" : "Sign in"}</h1>
             <form>
               <div>
                 <p>Name:</p>
@@ -38,8 +50,8 @@ const Login = () => {
                   type="text"
                   name="name"
                   placeholder="Name"
-                  onChange={(event) => setName(event.target.value)}
-                  value={name}
+                  onChange={(event) => setNameUser(event.target.value)}
+                  value={nameUser}
                 />
               </div>
               <div>
@@ -53,7 +65,19 @@ const Login = () => {
                 />
               </div>
             </form>
-            <CommonButton onClick={handleSubmit}>Sign in</CommonButton>
+            <CommonButton onClick={handleSubmit}>
+              {signUp ? "Sign up" : "Sign in"}
+            </CommonButton>
+            <p>
+              {signUp ? "Already have an account?" : "Don't have an account?"}
+              <span
+                onClick={() => {
+                  signUp ? setSignUp(false) : setSignUp(true);
+                }}
+              >
+                {signUp ? "Sign in" : "Sign up"}
+              </span>
+            </p>
           </div>
         </LoginContainer>
       </Container>

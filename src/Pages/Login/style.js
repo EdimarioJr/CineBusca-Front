@@ -36,5 +36,14 @@ export const LoginContainer = styled.main`
       padding: 10px 0;
       padding-left: 10px;
     }
+
+    p{
+      margin-top: 25px;
+    }
+    span {
+      color: #107ee5;
+      margin-left: 10px;
+      cursor:pointer;
+    }
   }
 `;
