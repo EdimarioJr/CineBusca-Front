@@ -5,6 +5,10 @@ import {
   BackgroundFilter,
   MovieInfo,
   WatchButton,
+  ReviewButton,
+  ReviewContainer,
+  AddReview,
+  CancelReview,
 } from "./style";
 import { CommonButton } from "../../commonStyle";
 import dbAPI from "../../services/dbAPI";
@@ -12,6 +16,8 @@ import auth from "../../services/auth";
 
 const MovieDetail = (props) => {
   const [inWatchlist, setInWatchlist] = useState(false);
+  const [modeReview, setModeReview] = useState(false);
+  const [review, setReview] = useState("");
   const {
     id,
     poster_path,
@@ -39,17 +45,32 @@ const MovieDetail = (props) => {
   }, [props.movieInfo]);
 
   async function handleAddWatchlist() {
-    if (inWatchlist) {
+    if (auth.isAuthenticated()) {
+      if (inWatchlist) {
+        await dbAPI
+          .delete("/watchlist", { params: { idMovie: id } })
+          .then((response) => console.log(response.data));
+        setInWatchlist(false);
+      } else {
+        await dbAPI
+          .post("/watchlist", { idMovie: id })
+          .then((response) => console.log(response.data));
+        setInWatchlist(true);
+      }
+    } else alert("Do the login to perform this operation!");
+  }
+
+  async function handleAddReview() {
+    if (auth.isAuthenticated()) {
       await dbAPI
-        .delete("/watchlist", { params: { idMovie: id } })
+        .post("/reviews", { idMovie: id, review })
         .then((response) => console.log(response.data));
-      setInWatchlist(false);
-    } else {
-      await dbAPI
-        .post("/watchlist", { idMovie: id })
-        .then((response) => console.log(response.data));
-      setInWatchlist(true);
-    }
+    } else alert("Do the login to perform this operation!");
+  }
+
+  function handleCancelReview() {
+    setModeReview(false);
+    setReview("");
   }
 
   return (
@@ -65,43 +86,65 @@ const MovieDetail = (props) => {
           <BackgroundFilter
             back={`https://image.tmdb.org/t/p/w185/${poster_path}`}
           />
-          <section className="info">
-            <h1>{title}</h1>
-            {auth.getToken() ? (
-              <WatchButton onClick={handleAddWatchlist}>
-                {inWatchlist
-                  ? "Remove from Watchlist"
-                  : "Add to your Watchlist"}
-              </WatchButton>
-            ) : (
-              ""
-            )}
+          {modeReview ? (
+            <ReviewContainer>
+              <h1>{title}</h1>
+              <textarea
+                placeholder="Add a review..."
+                onChange={(event) => setReview(event.target.value)}
+                value={review}
+              ></textarea>
+              <div className="rowButtons">
+                <AddReview onClick={handleAddReview}>Add Review</AddReview>
+                <CancelReview onClick={handleCancelReview}>Cancel</CancelReview>
+              </div>
+            </ReviewContainer>
+          ) : (
+            <>
+              <section className="info">
+                <h1>{title}</h1>
+                {auth.getToken() ? (
+                  <nav className="rowButtons">
+                    <WatchButton onClick={handleAddWatchlist}>
+                      {inWatchlist
+                        ? "Remove from Watchlist"
+                        : "Add to your Watchlist"}
+                    </WatchButton>
+                    <ReviewButton onClick={() => setModeReview(true)}>
+                      Review
+                    </ReviewButton>
+                  </nav>
+                ) : (
+                  ""
+                )}
 
-            <h2>{vote_average}</h2>
-            <p className="description">{overview}</p>
-            <div className="genres">
-              <p>Genres :</p>
-              {genres.map((genre, index) => (
-                <CommonButton style={{ marginRight: "10px" }} key={index}>
-                  {genre.name}
-                </CommonButton>
-              ))}
-            </div>
-          </section>
-          <div className="footer">
-            <aside>
-              <p>Budget:</p>
-              <p>{budget}</p>
-            </aside>
-            <aside>
-              <p>Duration:</p>
-              <p>{runtime} min</p>
-            </aside>
-            <aside>
-              <p>Release date:</p>
-              <p>{release_date}</p>
-            </aside>
-          </div>
+                <h2>{vote_average}</h2>
+                <p className="description">{overview}</p>
+                <div className="genres">
+                  <p>Genres :</p>
+                  {genres.map((genre, index) => (
+                    <CommonButton style={{ marginRight: "10px" }} key={index}>
+                      {genre.name}
+                    </CommonButton>
+                  ))}
+                </div>
+              </section>
+              <div className="footer">
+                <aside>
+                  <p>Budget:</p>
+                  <p>{budget}</p>
+                </aside>
+                <aside>
+                  <p>Duration:</p>
+                  <p>{runtime} min</p>
+                </aside>
+                <aside>
+                  <p>Release date:</p>
+                  <p>{release_date}</p>
+                </aside>
+              </div>
+            </>
+          )}
         </MovieInfo>
       </MovieContainer>
     </>

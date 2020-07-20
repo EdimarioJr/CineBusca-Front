@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const CastContainer = styled.section`
   background-color: black;
   width: 100%;
-  padding: 30px;
+  padding: 20px;
 
   h1 {
     color: white;

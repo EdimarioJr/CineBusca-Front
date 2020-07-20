@@ -26,7 +26,7 @@ export const DivSearch = styled.div`
 `;
 
 export const HeaderRow = styled(FlexRowBetween)`
-  margin: 20px 0;
+  margin: 10px 0;
 
   img {
     width: 100px;
@@ -45,3 +45,25 @@ export const WatchlistButton = styled(CommonButton)`
   color: black;
   background-color: #05a6da;
 `;
+
+export const UserNav = styled.nav`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  padding: 10px;
+
+  h3{
+    color: white;
+    border-bottom: 2px solid #107ee5;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  h3:hover{
+    background-color:#107ee5;
+    transition: all 1s;
+  }
+`

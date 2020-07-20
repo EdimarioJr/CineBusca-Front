@@ -4,7 +4,8 @@ import Homepage from "./Pages/Homepage";
 import Movie from "./Pages/Movie";
 import Watchlist from "./Pages/Watchlist";
 import Login from "./Pages/Login";
-import Search from './Pages/Search'
+import Reviews from "./Pages/Reviews";
+import Search from "./Pages/Search";
 import auth from "./services/auth";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -29,8 +30,9 @@ const App = () => {
         <Route exact path="/" component={Homepage} />
         <Route path="/Movie/:id" component={Movie} />
         <PrivateRoute path="/watchlist" component={Watchlist} />
+        <PrivateRoute path="/reviews" component={Reviews} />
         <Route path="/login" component={Login} />
-        <Route path="/search" component={Search}/>
+        <Route path="/search" component={Search} />
       </Switch>
     </BrowserRouter>
   );

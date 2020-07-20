@@ -9,7 +9,7 @@ export const MovieContainer = styled.section`
 
   #poster {
     width: 400px;
-    height: 100%;
+    height: 550px;
   }
 `;
 
@@ -28,10 +28,15 @@ export const BackgroundFilter = styled.div`
 export const MovieInfo = styled.div`
   color: white;
   position: relative;
-  z-index: 9999;
+  z-index: 2;
   background-color: black;
   h2 {
     margin-bottom: 20px;
+  }
+
+  h1 {
+    margin-bottom: 10px;
+    font-size: 30px;
   }
 
   .info {
@@ -41,17 +46,13 @@ export const MovieInfo = styled.div`
     z-index: 2;
     text-shadow: 1px 1px rgba(0, 0, 0, 0.5), -1px 1px rgba(0, 0, 0, 0.5),
       1px -1px rgba(0, 0, 0, 0.5), -1px -1px rgba(0, 0, 0, 0.5);
-    h1 {
-      margin-bottom: 20px;
-      font-size: 30px;
-    }
 
     .description {
       position: inherit;
       z-index: 2;
       margin: 10px 0;
+      height: calc(100% - 190px);
       line-height: 30px;
-      height: 300px;
       text-overflow: ellipsis;
       overflow: auto;
       font-size: 24px;
@@ -70,6 +71,13 @@ export const MovieInfo = styled.div`
         margin-right: 15px;
       }
     }
+  }
+
+  .rowButtons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
   }
 
   .footer {
@@ -95,7 +103,39 @@ export const MovieInfo = styled.div`
 `;
 
 export const WatchButton = styled(CommonButton)`
+  width: 180px;
   color: black;
   background-color: #02bea7;
-  margin-bottom: 20px;
+  margin-right: 15px;
+`;
+
+export const ReviewButton = styled(CommonButton)`
+  width: 180px;
+`;
+
+export const AddReview = styled(CommonButton)`
+  background-color: #2caf1e;
+  margin-right: 10px;
+`;
+export const CancelReview = styled(CommonButton)`
+  background-color: #fc0349;
+`;
+
+export const ReviewContainer = styled.section`
+  margin: 20px 30px;
+  position: relative;
+  z-index: 2;
+
+  textarea {
+    border: 1px solid #888;
+    background-color: #20242b;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    overflow: auto;
+    resize: none;
+    width: 100%;
+    height: 350px;
+    margin-bottom: 15px;
+  }
 `;
