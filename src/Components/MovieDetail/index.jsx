@@ -28,6 +28,7 @@ const MovieDetail = (props) => {
     runtime,
     overview,
     release_date,
+    director,
   } = props.movieInfo;
 
   useEffect(() => {
@@ -40,13 +41,18 @@ const MovieDetail = (props) => {
           } else setInWatchlist(false);
         }
       });
-      dbAPI.get("/reviews").then((response) => {
-        const reviews = response.data;
-        reviews.forEach((review) => {
-          if (review.idMovie === id) setReview(review.review);
+      if (auth.isAuthenticated()) {
+        dbAPI.get("/reviews").then((response) => {
+          const reviews = response.data;
+          console.log(reviews);
+          reviews.forEach((review) => {
+            if (review.idMovie === id) setReview(review.review);
+          });
         });
-      });
+      }
     })();
+
+    setModeReview(false);
     //eslint-disable-next-line
   }, [props.movieInfo]);
 
@@ -68,7 +74,7 @@ const MovieDetail = (props) => {
     if (auth.isAuthenticated()) {
       await dbAPI
         .post("/reviews", { idMovie: id, review })
-        .then((response) => console.log(response.data));
+        .then((response) => alert(response.data.message));
     } else alert("Do the login to perform this operation!");
   }
 
@@ -92,7 +98,9 @@ const MovieDetail = (props) => {
           />
           {modeReview ? (
             <ReviewContainer>
-              <h1>{title}</h1>
+              <h1>
+                {title} <span id="director">by {director}</span>
+              </h1>
               <textarea
                 placeholder="Add a review..."
                 onChange={(event) => setReview(event.target.value)}
@@ -106,7 +114,9 @@ const MovieDetail = (props) => {
           ) : (
             <>
               <section className="info">
-                <h1>{title}</h1>
+                <h1>
+                  {title} <span id="director">by {director}</span>
+                </h1>
                 {auth.getToken() ? (
                   <nav className="rowButtons">
                     <WatchButton onClick={handleAddWatchlist}>
@@ -156,16 +166,14 @@ const MovieDetail = (props) => {
 };
 
 MovieDetail.propTypes = {
-  movieInfo: PropTypes.shape({
-    poster_path: PropTypes.string,
-    title: PropTypes.string,
-    vote_average: PropTypes.number,
-    overview: PropTypes.string,
-    genres: PropTypes.array,
-    budget: PropTypes.number,
-    runtime: PropTypes.number,
-    release_date: PropTypes.string,
-  }),
+  poster_path: PropTypes.string,
+  title: PropTypes.string,
+  vote_average: PropTypes.number,
+  overview: PropTypes.string,
+  genres: PropTypes.array,
+  budget: PropTypes.number,
+  runtime: PropTypes.number,
+  release_date: PropTypes.string,
 };
 
 export default MovieDetail;

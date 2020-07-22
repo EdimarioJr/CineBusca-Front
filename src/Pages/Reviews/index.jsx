@@ -6,8 +6,9 @@ import { Container } from "../../commonStyle";
 import dbAPI from "../../services/dbAPI";
 
 const ReviewsContainer = styled.main`
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
   color: white;
 `;
@@ -39,6 +40,7 @@ const Reviews = () => {
                 <ReviewCard
                   idMovie={review.idMovie}
                   review={review.review}
+                  date={review.date}
                   deleteReview={handleDeleteReview}
                   key={index}
                 />

@@ -16,6 +16,7 @@ import Carousel from "../../Components/Carousel";
 const Movie = (props) => {
   const [movie, setMovie] = useState(null);
   const [actors, setActors] = useState([]);
+  const [director, setDirector] = useState("");
   const [recommendations, setRecommendations] = useState([]);
   const id = props.match.params.id;
 
@@ -30,7 +31,11 @@ const Movie = (props) => {
       movieApi
         .get(`movie/${id}/credits?api_key=${process.env.REACT_APP_MOVIE_API}`)
         .then((response) => {
+          console.log(response.data);
           setActors(response.data.cast);
+          response.data.crew.forEach((current) => {
+            if (current.job === "Director") setDirector(current.name);
+          });
         });
       movieApi
         .get(
@@ -48,7 +53,7 @@ const Movie = (props) => {
       <Container>
         {movie ? (
           <>
-            <MovieDetail movieInfo={movie} />
+            <MovieDetail movieInfo={{...movie, director}} />
             <CastContainer>
               <h1>Cast</h1>
               <Cast>

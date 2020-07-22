@@ -6,12 +6,11 @@ import dbAPI from "../../services/dbAPI";
 import { CommonButton } from "../../commonStyle";
 
 const ReviewContainer = styled.section`
-  width: 50%;
+  width: 100%;
   height: 300px;
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-gap: 20px;
-  background-color: #383d48;
+  grid-gap: 10px;
 
   img {
     height: inherit;
@@ -19,17 +18,25 @@ const ReviewContainer = styled.section`
   }
 
   .movieInfo {
+
     overflow: auto;
     color: white;
-    padding-right: 20px;
+    padding-right: 15px;
+    padding-left: 10px;
+    background-color: #383d48;
 
     h3 {
       margin-top: 20px;
-      margin-bottom: 30px;
+      margin-bottom: 5px;
+    }
+
+    h4 {
+      font-weight: 300;
     }
 
     p {
       height: calc(100% - 130px);
+      font-weight: 500;
     }
   }
 `;
@@ -65,6 +72,7 @@ const ReviewCard = (props) => {
         />
         <div className="movieInfo">
           <h3>{movie.original_title}</h3>
+          <h4>{props.date.slice(0, 9).replaceAll("-", "/")}</h4>
           <p>{props.review}</p>
           <CommonButton onClick={handleDelete}>Delete review</CommonButton>
         </div>
@@ -77,6 +85,7 @@ ReviewCard.propTypes = {
   idMovie: PropTypes.number,
   review: PropTypes.string,
   deleteReview: PropTypes.func,
+  date: PropTypes.string,
 };
 
 export default ReviewCard;

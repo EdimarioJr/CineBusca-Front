@@ -39,6 +39,11 @@ export const MovieInfo = styled.div`
     font-size: 30px;
   }
 
+  #director {
+    font-weight: 300;
+    font-size: 24px;
+  }
+
   .info {
     margin: 20px 30px;
     height: calc(100% - 85px);
@@ -137,5 +142,6 @@ export const ReviewContainer = styled.section`
     width: 100%;
     height: 350px;
     margin-bottom: 15px;
+    font-family: "Poppins", sans-serif;
   }
 `;

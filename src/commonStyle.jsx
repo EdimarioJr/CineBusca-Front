@@ -17,7 +17,7 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Container = styled.div`
-  width: 80%;
+  width: 85%;
   margin: 0 auto;
 `;
 
