@@ -9,6 +9,7 @@ const ReviewsContainer = styled.main`
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 20px;
+  color: white;
 `;
 
 const Reviews = () => {
@@ -20,21 +21,32 @@ const Reviews = () => {
     })();
   }, []);
 
+  function handleDeleteReview(id) {
+    const newReviews = reviews.filter((current) => {
+      return current.idMovie !== id;
+    });
+    setReviews(newReviews);
+  }
+
   return (
     <>
-      <Header />
+      <Header review />
       <Container>
-        <h1>My Reviews</h1>
         <ReviewsContainer>
-          {reviews.map((review, index) => {
-            return (
-              <ReviewCard
-                idMovie={review.idMovie}
-                review={review.review}
-                key={index}
-              />
-            );
-          })}
+          {reviews.length !== 0 ? (
+            reviews.map((review, index) => {
+              return (
+                <ReviewCard
+                  idMovie={review.idMovie}
+                  review={review.review}
+                  deleteReview={handleDeleteReview}
+                  key={index}
+                />
+              );
+            })
+          ) : (
+            <h1>No reviews</h1>
+          )}
         </ReviewsContainer>
       </Container>
     </>

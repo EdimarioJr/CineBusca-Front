@@ -21,6 +21,7 @@ const ReviewContainer = styled.section`
   .movieInfo {
     overflow: auto;
     color: white;
+    padding-right: 20px;
 
     h3 {
       margin-top: 20px;
@@ -52,6 +53,7 @@ const ReviewCard = (props) => {
         idMovie: props.idMovie,
       },
     });
+    props.deleteReview(props.idMovie);
   }
 
   return (
@@ -74,6 +76,7 @@ const ReviewCard = (props) => {
 ReviewCard.propTypes = {
   idMovie: PropTypes.number,
   review: PropTypes.string,
+  deleteReview: PropTypes.func,
 };
 
 export default ReviewCard;

@@ -6,7 +6,7 @@ import CineBuscaLogo from "../../assets/cinebusca.png";
 import auth from "../../services/auth";
 import { useHistory } from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
   const [loginOn, setLoginOn] = useState(auth.isAuthenticated());
   const [search, setSearch] = useState("");
   const history = useHistory();
@@ -56,12 +56,12 @@ const Header = () => {
         </InputsRow>
       </HeaderRow>
       {loginOn ? (
-        <UserNav>
+        <UserNav watchlist={props.watchlist} review={props.review}>
           <Link to="/watchlist" style={{ textDecoration: "none" }}>
-            <h3>WATCHLIST</h3>
+            <h3 id="watch">WATCHLIST</h3>
           </Link>
           <Link to="/reviews" style={{ textDecoration: "none" }}>
-            <h3>REVIEWS</h3>
+            <h3 id="review">REVIEWS</h3>
           </Link>
         </UserNav>
       ) : (

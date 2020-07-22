@@ -40,6 +40,12 @@ const MovieDetail = (props) => {
           } else setInWatchlist(false);
         }
       });
+      dbAPI.get("/reviews").then((response) => {
+        const reviews = response.data;
+        reviews.forEach((review) => {
+          if (review.idMovie === id) setReview(review.review);
+        });
+      });
     })();
     //eslint-disable-next-line
   }, [props.movieInfo]);
@@ -47,9 +53,7 @@ const MovieDetail = (props) => {
   async function handleAddWatchlist() {
     if (auth.isAuthenticated()) {
       if (inWatchlist) {
-        await dbAPI
-          .delete("/watchlist", { params: { idMovie: id } })
-          .then((response) => console.log(response.data));
+        await dbAPI.delete("/watchlist", { params: { idMovie: id } });
         setInWatchlist(false);
       } else {
         await dbAPI

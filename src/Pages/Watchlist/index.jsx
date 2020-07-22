@@ -52,10 +52,9 @@ const Watchlist = () => {
 
   return (
     <>
-      <Header />
+      <Header  watchlist />
       <Container>
         <WatchlistContainer>
-          <h1>My Watchlist</h1>
           <section className="grid">
             {movies.length ? (
               movies.map((movie, index) => {

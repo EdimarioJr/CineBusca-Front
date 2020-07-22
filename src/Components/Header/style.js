@@ -55,15 +55,24 @@ export const UserNav = styled.nav`
   align-self: center;
   padding: 10px;
 
-  h3{
+  h3 {
     color: white;
     border-bottom: 2px solid #107ee5;
     padding: 10px;
     cursor: pointer;
   }
 
-  h3:hover{
-    background-color:#107ee5;
+  h3:hover {
+    background-color: #107ee5;
     transition: all 1s;
   }
-`
+
+  #watch {
+    background-color: ${(props) =>
+      props.watchlist ? "#107ee5" : ""};
+  }
+
+  #review {
+    background-color: ${(props) => (props.review ? "#107ee5" : "")};
+  }
+`;
