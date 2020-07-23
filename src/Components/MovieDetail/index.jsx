@@ -6,18 +6,15 @@ import {
   MovieInfo,
   WatchButton,
   ReviewButton,
-  ReviewContainer,
-  AddReview,
-  CancelReview,
 } from "./style";
 import { CommonButton } from "../../commonStyle";
+import ReviewInput from "./ReviewInput";
 import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 
 const MovieDetail = (props) => {
   const [inWatchlist, setInWatchlist] = useState(false);
   const [modeReview, setModeReview] = useState(false);
-  const [review, setReview] = useState("");
   const {
     id,
     poster_path,
@@ -32,26 +29,19 @@ const MovieDetail = (props) => {
   } = props.movieInfo;
 
   useEffect(() => {
+    setModeReview(false);
     (async () => {
-      dbAPI.get("/watchlist").then((response) => {
-        const { watchlist } = response.data;
-        if (watchlist) {
-          if (watchlist.includes(String(id))) {
-            setInWatchlist(true);
-          } else setInWatchlist(false);
-        }
-      });
       if (auth.isAuthenticated()) {
-        dbAPI.get("/reviews").then((response) => {
-          const reviews = response.data;
-          reviews.forEach((review) => {
-            if (review.idMovie === id) setReview(review.review);
-          });
+        dbAPI.get("/watchlist").then((response) => {
+          const { watchlist } = response.data;
+          if (watchlist) {
+            if (watchlist.includes(String(id))) {
+              setInWatchlist(true);
+            } else setInWatchlist(false);
+          }
         });
       }
     })();
-
-    setModeReview(false);
     //eslint-disable-next-line
   }, [props.movieInfo]);
 
@@ -69,19 +59,6 @@ const MovieDetail = (props) => {
     } else alert("Do the login to perform this operation!");
   }
 
-  async function handleAddReview() {
-    if (auth.isAuthenticated()) {
-      await dbAPI
-        .post("/reviews", { idMovie: id, review })
-        .then((response) => alert(response.data.message));
-    } else alert("Do the login to perform this operation!");
-  }
-
-  function handleCancelReview() {
-    setModeReview(false);
-    setReview("");
-  }
-
   return (
     <>
       <MovieContainer>
@@ -96,20 +73,12 @@ const MovieDetail = (props) => {
             back={`https://image.tmdb.org/t/p/w185/${poster_path}`}
           />
           {modeReview ? (
-            <ReviewContainer>
-              <h1>
-                {title} <span id="director">by {director}</span>
-              </h1>
-              <textarea
-                placeholder="Add a review..."
-                onChange={(event) => setReview(event.target.value)}
-                value={review}
-              ></textarea>
-              <div className="rowButtons">
-                <AddReview onClick={handleAddReview}>Add Review</AddReview>
-                <CancelReview onClick={handleCancelReview}>Cancel</CancelReview>
-              </div>
-            </ReviewContainer>
+            <ReviewInput
+              id={id}
+              director={director}
+              title={title}
+              isReview={setModeReview}
+            />
           ) : (
             <>
               <section className="info">

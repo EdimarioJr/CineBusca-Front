@@ -19,7 +19,7 @@ export const BackgroundFilter = styled.div`
   background-image: url(${(props) => props.back});
   background-size: cover;
   position: absolute;
-  filter: blur(30px);
+  filter: blur(15px);
   top: 0;
   left: 0;
   z-index: 1;
