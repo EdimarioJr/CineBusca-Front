@@ -1,6 +1,11 @@
 const auth = {
   isAuthenticated: () => {
-    return sessionStorage.getItem(process.env.REACT_APP_SECRET_JWT) !== null;
+    if (sessionStorage.getItem(process.env.REACT_APP_SECRET_JWT) !== null)
+      return true;
+    else {
+      sessionStorage.removeItem(process.env.REACT_APP_SECRET_JWT);
+      return false;
+    }
   },
   login: (token) => {
     sessionStorage.setItem(process.env.REACT_APP_SECRET_JWT, token);

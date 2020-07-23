@@ -46,7 +46,7 @@ export const MovieInfo = styled.div`
 
   .info {
     margin: 20px 30px;
-    height: calc(100% - 85px);
+    height: 465px;
     position: inherit;
     z-index: 2;
     text-shadow: 1px 1px rgba(0, 0, 0, 0.5), -1px 1px rgba(0, 0, 0, 0.5),

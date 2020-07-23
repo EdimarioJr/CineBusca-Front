@@ -11,7 +11,7 @@ export const CastContainer = styled.section`
     margin-bottom: 20px;
   }
 `;
-export const Cast = styled.div`
+export const CastCards = styled.div`
   display: flex;
   flex-direction: row;
   overflow-x: scroll;

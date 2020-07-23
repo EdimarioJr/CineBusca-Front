@@ -50,7 +50,7 @@ function App() {
           </section>
           <LoadMore
             onClick={() => {
-              const newPage = page + 1;
+              let newPage = page + 1;
               setPage(newPage);
             }}
           >

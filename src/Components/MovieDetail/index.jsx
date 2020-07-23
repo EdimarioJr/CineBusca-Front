@@ -44,7 +44,6 @@ const MovieDetail = (props) => {
       if (auth.isAuthenticated()) {
         dbAPI.get("/reviews").then((response) => {
           const reviews = response.data;
-          console.log(reviews);
           reviews.forEach((review) => {
             if (review.idMovie === id) setReview(review.review);
           });
@@ -62,10 +61,10 @@ const MovieDetail = (props) => {
         await dbAPI.delete("/watchlist", { params: { idMovie: id } });
         setInWatchlist(false);
       } else {
-        await dbAPI
-          .post("/watchlist", { idMovie: id })
-          .then((response) => console.log(response.data));
-        setInWatchlist(true);
+        if (id) {
+          await dbAPI.post("/watchlist", { idMovie: id });
+          setInWatchlist(true);
+        }
       }
     } else alert("Do the login to perform this operation!");
   }

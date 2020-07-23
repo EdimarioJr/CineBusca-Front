@@ -25,7 +25,6 @@ const SearchResults = () => {
           `search/movie?api_key=${process.env.REACT_APP_MOVIE_API}&query=${query}&page=${actualPage}`
         )
         .then((response) => {
-          console.log(response.data);
           if (actualPage === 1) {
             setTotalPages(response.data.total_pages);
             setMovies(response.data.results);

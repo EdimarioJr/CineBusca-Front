@@ -21,22 +21,24 @@ const Watchlist = () => {
       });
       setMovies(newMovies);
     } else {
-      alert("Você não tem permissão para fazer essa operação!");
-      history.push("/");
+      alert("You don't have the permission to do this!");
+      history.push("/login");
     }
   }
 
   useEffect(() => {
     (async () => {
       dbAPI.get("/watchlist").then(async (response) => {
-        let { watchlist, auth, message } = response.data;
-        if (auth) {
+        let { watchlist, message } = response.data;
+        if (watchlist) {
           let moviesWatchlist = await Promise.all(
             watchlist.map(async (current) => {
-              let aux = await movieApi.get(
-                `movie/${current}?api_key=${process.env.REACT_APP_MOVIE_API}`
-              );
-              return aux.data;
+              if (current) {
+                let aux = await movieApi.get(
+                  `movie/${current}?api_key=${process.env.REACT_APP_MOVIE_API}`
+                );
+                return aux.data;
+              }
             })
           );
           setMovies(moviesWatchlist);
@@ -52,25 +54,27 @@ const Watchlist = () => {
 
   return (
     <>
-      <Header  watchlist />
+      <Header watchlist />
       <Container>
         <WatchlistContainer>
           <section className="grid">
             {movies.length ? (
               movies.map((movie, index) => {
-                return (
-                  <div className="card" key={index}>
-                    <MovieCard
-                      idMovie={movie.id}
-                      title={movie.original_title}
-                      score={movie.vote_average}
-                      poster={movie.poster_path}
-                    />
-                    <RemoveButton id={movie.id} onClick={handleRemove}>
-                      Remove from watchlist
-                    </RemoveButton>
-                  </div>
-                );
+                if (movie) {
+                  return (
+                    <div className="card" key={index}>
+                      <MovieCard
+                        idMovie={movie.id}
+                        title={movie.original_title}
+                        score={movie.vote_average}
+                        poster={movie.poster_path}
+                      />
+                      <RemoveButton id={movie.id} onClick={handleRemove}>
+                        Remove from watchlist
+                      </RemoveButton>
+                    </div>
+                  );
+                } else return movie;
               })
             ) : (
               <h2>No movies yet</h2>

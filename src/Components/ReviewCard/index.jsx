@@ -3,7 +3,9 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import movieApi from "../../services/movieApi";
 import dbAPI from "../../services/dbAPI";
+import auth from "../../services/auth";
 import { CommonButton } from "../../commonStyle";
+import { useHistory } from "react-router-dom";
 
 const ReviewContainer = styled.section`
   width: 100%;
@@ -18,7 +20,6 @@ const ReviewContainer = styled.section`
   }
 
   .movieInfo {
-
     overflow: auto;
     color: white;
     padding-right: 15px;
@@ -43,6 +44,7 @@ const ReviewContainer = styled.section`
 
 const ReviewCard = (props) => {
   const [movie, setMovie] = useState("");
+  const history = useHistory();
 
   useEffect(() => {
     (async () => {
@@ -55,12 +57,17 @@ const ReviewCard = (props) => {
   }, [props.idMovie]);
 
   async function handleDelete() {
-    await dbAPI.delete("/reviews", {
-      params: {
-        idMovie: props.idMovie,
-      },
-    });
-    props.deleteReview(props.idMovie);
+    if (auth.isAuthenticated()) {
+      await dbAPI.delete("/reviews", {
+        params: {
+          idMovie: props.idMovie,
+        },
+      });
+      props.deleteReview(props.idMovie);
+    } else {
+      alert("You don't have the permission to do this!");
+      history.push("/login");
+    }
   }
 
   return (
