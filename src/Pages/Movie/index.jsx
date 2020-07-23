@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import movieApi from "../../services/movieApi";
+import MovieData from "../../services/movieApi";
 import { Gallery } from "./style";
 import { Container } from "../../commonStyle";
 import MovieDetail from "../../Components/MovieDetail";
@@ -17,11 +17,9 @@ const Movie = (props) => {
   useEffect(() => {
     (async () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
-      movieApi
-        .get(`movie/${id}?api_key=${process.env.REACT_APP_MOVIE_API}`)
-        .then((response) => {
-          setMovie(response.data);
-        });
+      await MovieData.getMovie(id).then((response) => {
+        setMovie(response);
+      });
     })();
   }, [id]);
 

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../../Components/Header";
 import { Container, LoadMore } from "../../commonStyle";
-import movieApi from "../../services/movieApi";
 import MovieCard from "../../Components/MovieCard";
 import { SearchContainer } from "./style";
+import MovieData from "../../services/movieApi";
 
 const SearchResults = () => {
   const [movies, setMovies] = useState([]);
@@ -20,16 +20,13 @@ const SearchResults = () => {
   useEffect(() => {
     const query = location.search.replace("?", "").trim();
     (async () => {
-      movieApi
-        .get(
-          `search/movie?api_key=${process.env.REACT_APP_MOVIE_API}&query=${query}&page=${actualPage}`
-        )
+      await MovieData.searchMovie(query,actualPage)
         .then((response) => {
           if (actualPage === 1) {
-            setTotalPages(response.data.total_pages);
-            setMovies(response.data.results);
+            setTotalPages(response.total_pages);
+            setMovies(response.results);
           } else {
-            const newMovies = [...movies, ...response.data.results];
+            const newMovies = [...movies, ...response.results];
             setMovies(newMovies);
           }
         });

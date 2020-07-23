@@ -3,14 +3,14 @@ import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 import { ReviewContainer, AddReview, CancelReview } from "./style";
 
-const ReviewInput = ({ id, director, title , isReview}) => {
+const ReviewInput = ({ id, director, title, isReview }) => {
   const [review, setReview] = useState("");
 
   useEffect(() => {
     (async () => {
       if (auth.isAuthenticated()) {
         dbAPI.get("/reviews").then((response) => {
-          const reviews = response.data;
+          const { reviews } = response.data;
           reviews.forEach((review) => {
             if (review.idMovie === id) setReview(review.review);
           });
@@ -21,10 +21,10 @@ const ReviewInput = ({ id, director, title , isReview}) => {
 
   async function handleAddReview() {
     if (auth.isAuthenticated()) {
-      await dbAPI
-        .post("/reviews", { idMovie: id, review })
-        .then((response) => { console.log(response)
-            alert(response.data.message)});
+      await dbAPI.post("/reviews", { idMovie: id, review }).then((response) => {
+        console.log(response);
+        alert(response.data.message);
+      });
     } else alert("Do the login to perform this operation!");
   }
 

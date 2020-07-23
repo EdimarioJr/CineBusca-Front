@@ -1,69 +1,30 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
-import movieApi from "../../services/movieApi";
+import MovieData from "../../services/movieApi";
 import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 import { CommonButton } from "../../commonStyle";
 import { useHistory } from "react-router-dom";
+import { ReviewContainer } from "./style";
 
-const ReviewContainer = styled.section`
-  width: 100%;
-  height: 300px;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-gap: 10px;
-
-  img {
-    height: inherit;
-    width: 100%;
-  }
-
-  .movieInfo {
-    overflow: auto;
-    color: white;
-    padding-right: 15px;
-    padding-left: 10px;
-    background-color: #383d48;
-
-    h3 {
-      margin-top: 20px;
-      margin-bottom: 5px;
-    }
-
-    h4 {
-      font-weight: 300;
-    }
-
-    p {
-      height: calc(100% - 130px);
-      font-weight: 500;
-    }
-  }
-`;
-
-const ReviewCard = (props) => {
+const ReviewCard = ({ idMovie, date, review, deleteReview }) => {
   const [movie, setMovie] = useState("");
   const history = useHistory();
 
   useEffect(() => {
     (async () => {
-      await movieApi
-        .get(
-          `movie/${props.idMovie}?api_key=${process.env.REACT_APP_MOVIE_API}`
-        )
-        .then((response) => setMovie(response.data));
+      await MovieData.getMovie(idMovie).then((response) => setMovie(response));
     })();
-  }, [props.idMovie]);
+  }, [idMovie]);
 
   async function handleDelete() {
     if (auth.isAuthenticated()) {
       await dbAPI.delete("/reviews", {
         params: {
-          idMovie: props.idMovie,
+          idMovie,
         },
       });
-      props.deleteReview(props.idMovie);
+      deleteReview(idMovie);
     } else {
       alert("You don't have the permission to do this!");
       history.push("/login");
@@ -79,8 +40,8 @@ const ReviewCard = (props) => {
         />
         <div className="movieInfo">
           <h3>{movie.original_title}</h3>
-          <h4>{props.date.slice(0, 9).replaceAll("-", "/")}</h4>
-          <p>{props.review}</p>
+          <h4>{date.slice(0, 9).replaceAll("-", "/")}</h4>
+          <p>{review}</p>
           <CommonButton onClick={handleDelete}>Delete review</CommonButton>
         </div>
       </ReviewContainer>

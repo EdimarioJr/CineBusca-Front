@@ -1,38 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { DivCarousel } from "./style";
-import movieApi from "../../services/movieApi";
 import Carousel from "nuka-carousel";
 import { Link } from "react-router-dom";
+import MovieData from "../../services/movieApi";
+import PropTypes from "prop-types";
 
-const CineCarousel = (props) => {
+const CineCarousel = ({ idMovie }) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      props.idMovie
-        ? await movieApi
-            .get(
-              `movie/${props.idMovie}/images?api_key=${process.env.REACT_APP_MOVIE_API}`
-            )
-            .then((response) => {
-              setMovies(response.data.backdrops);
-            })
-        : await movieApi
-            .get(
-              `discover/movie?api_key=${process.env.REACT_APP_MOVIE_API}&sort_by=popularity.desc`
-            )
-            .then((response) => {
-              setMovies(response.data.results);
-            });
+      idMovie
+        ? await MovieData.getMovieImages(idMovie).then((response) => {
+            setMovies(response.backdrops);
+          })
+        : await MovieData.getPopularMovies().then((response) => {
+            setMovies(response.results);
+          });
     }
     fetchData();
     //eslint-disable-next-line
-  }, [props.idMovie]);
+  }, [idMovie]);
   return (
     <>
       <DivCarousel>
         <Carousel
-          slidesToShow={props.idMovie ? 1 : 4}
+          slidesToShow={idMovie ? 1 : 4}
           swiping={true}
           defaultControlsConfig={{
             pagingDotsStyle: {
@@ -40,7 +33,7 @@ const CineCarousel = (props) => {
             },
           }}
         >
-          {props.idMovie
+          {idMovie
             ? movies.map((movie, index) => {
                 return (
                   <img
@@ -72,6 +65,10 @@ const CineCarousel = (props) => {
       </DivCarousel>
     </>
   );
+};
+
+CineCarousel.propTypes = {
+  idMovie: PropTypes.string,
 };
 
 export default CineCarousel;

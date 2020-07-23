@@ -47,7 +47,6 @@ const Reviews = () => {
       <Header review />
       <Container>
         <ReviewsContainer>
-          {console.log(reviews)}
           {reviews.length !== 0 ? (
             reviews.map((review, index) => {
               return (

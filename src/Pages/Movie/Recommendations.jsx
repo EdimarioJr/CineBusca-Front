@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import movieApi from "../../services/movieApi";
+import MovieData from "../../services/movieApi";
 import { RecommendationsContainer } from "./style";
 import PropTypes from "prop-types";
 import MovieCard from "../../Components/MovieCard";
@@ -9,13 +9,9 @@ const Recommendations = ({ id, movieTitle }) => {
 
   useEffect(() => {
     (async () => {
-      movieApi
-        .get(
-          `movie/${id}/recommendations?api_key=${process.env.REACT_APP_MOVIE_API}`
-        )
-        .then((response) => {
-          setRecommendations(response.data.results);
-        });
+      await MovieData.getMovieRecommendations(id).then((response) => {
+        setRecommendations(response.results);
+      });
     })();
   }, [id]);
 

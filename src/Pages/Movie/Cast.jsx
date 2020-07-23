@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { CastContainer, CastCards } from "./style";
-import movieApi from "../../services/movieApi";
 import NoImage from "../../assets/no-image.jpg";
 import PropTypes from "prop-types";
+import MovieData from "../../services/movieApi";
 
 const Cast = ({ id, putDirector }) => {
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
     (async () => {
-      movieApi
-        .get(`movie/${id}/credits?api_key=${process.env.REACT_APP_MOVIE_API}`)
-        .then((response) => {
-          setCast(response.data.cast);
-          response.data.crew.forEach((current) => {
-            if (current.job === "Director") putDirector(current.name);
-          });
+      await MovieData.getMovieCast(id).then((response) => {
+        setCast(response.cast);
+        response.crew.forEach((current) => {
+          if (current.job === "Director") putDirector(current.name);
         });
+      });
     })();
     // eslint-disable-next-line
   }, [id]);

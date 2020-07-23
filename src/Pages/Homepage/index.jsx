@@ -4,7 +4,7 @@ import { Container } from "../../commonStyle";
 import Header from "../../Components/Header";
 import CineCarousel from "../../Components/Carousel";
 import MovieCard from "../../Components/MovieCard";
-import movieApi from "../../services/movieApi";
+import MovieData from "../../services/movieApi";
 import { LoadMore } from "../../commonStyle";
 
 function App() {
@@ -13,14 +13,11 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      await movieApi
-        .get(
-          `discover/movie?api_key=${process.env.REACT_APP_MOVIE_API}&sort_by=popularity.desc&page=${page}`
-        )
+      await MovieData.getPopularMovies(page)
         .then((response) => {
-          if (page === 2) setMovies(response.data.results);
+          if (page === 2) setMovies(response.results);
           else {
-            const newMovies = [...movies, ...response.data.results];
+            const newMovies = [...movies, ...response.results];
             setMovies(newMovies);
           }
         });
