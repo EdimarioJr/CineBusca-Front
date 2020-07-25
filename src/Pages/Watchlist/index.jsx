@@ -7,6 +7,7 @@ import dbAPI from "../../services/dbAPI";
 import movieApi from "../../services/movieApi";
 import Header from "../../Components/Header";
 import { Container } from "../../commonStyle";
+import auth from "../../services/auth";
 
 const Watchlist = () => {
   const [movies, setMovies] = useState([]);
@@ -15,11 +16,18 @@ const Watchlist = () => {
   async function handleRemove(event) {
     if (authentication.isAuthenticated()) {
       const idMovie = event.target.id;
-      await dbAPI.delete("/watchlist", { params: { idMovie } });
-      const newMovies = movies.filter((movie) => {
-        return movie.id !== Number(idMovie);
-      });
-      setMovies(newMovies);
+      const response = await dbAPI.delete("/watchlist", { params: { idMovie } });
+      if(response.data.watchlist){
+        const newMovies = movies.filter((movie) => {
+          return movie.id !== Number(idMovie);
+        });
+        setMovies(newMovies);
+      }
+      else {
+        alert(response.data.message)
+        authentication.logout()
+        history.push("/")
+      }
     } else {
       alert("You don't have the permission to do this!");
       history.push("/login");

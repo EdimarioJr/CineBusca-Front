@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import Header from "../../Components/Header";
 import ReviewCard from "../../Components/ReviewCard";
 import { Container } from "../../commonStyle";
 import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 import { useHistory } from "react-router-dom";
-
-const ReviewsContainer = styled.main`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
-  color: white;
-`;
+import {ReviewsContainer} from './style'
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);

@@ -19,12 +19,18 @@ const ReviewCard = ({ idMovie, date, review, deleteReview }) => {
 
   async function handleDelete() {
     if (auth.isAuthenticated()) {
-      await dbAPI.delete("/reviews", {
+     const response =  await dbAPI.delete("/reviews", {
         params: {
           idMovie,
         },
       });
-      deleteReview(idMovie);
+      if(response.data.review) 
+        deleteReview(idMovie);
+      else {
+        alert(response.data.message)
+        auth.logout()
+        history.push("/")
+      }
     } else {
       alert("You don't have the permission to do this!");
       history.push("/login");

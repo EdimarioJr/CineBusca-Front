@@ -2,18 +2,26 @@ import React, { useState, useEffect } from "react";
 import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 import { ReviewContainer, AddReview, CancelReview } from "./style";
+import { useHistory } from "react-router-dom";
 
 const ReviewInput = ({ id, director, title, isReview }) => {
   const [review, setReview] = useState("");
+  const history = useHistory();
 
   useEffect(() => {
     (async () => {
       if (auth.isAuthenticated()) {
         dbAPI.get("/reviews").then((response) => {
-          const { reviews } = response.data;
-          reviews.forEach((review) => {
-            if (review.idMovie === id) setReview(review.review);
-          });
+          const { reviews, message } = response.data;
+          if (reviews) {
+            reviews.forEach((review) => {
+              if (review.idMovie === id) setReview(review.review);
+            });
+          } else {
+            alert(message);
+            auth.logout();
+            history.push("/");
+          }
         });
       }
     })();
@@ -22,10 +30,13 @@ const ReviewInput = ({ id, director, title, isReview }) => {
   async function handleAddReview() {
     if (auth.isAuthenticated()) {
       await dbAPI.post("/reviews", { idMovie: id, review }).then((response) => {
-        console.log(response);
         alert(response.data.message);
+        if (!response.data.review) history.push("/");
       });
-    } else alert("Do the login to perform this operation!");
+    } else {
+      alert("Login to perform this operation!");
+      history.push("/");
+    }
   }
 
   function handleCancelReview() {
