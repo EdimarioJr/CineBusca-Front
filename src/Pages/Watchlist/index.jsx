@@ -4,10 +4,15 @@ import MovieCard from "../../Components/MovieCard";
 import authentication from "../../services/auth";
 import { useHistory } from "react-router-dom";
 import dbAPI from "../../services/dbAPI";
-import movieApi from "../../services/movieApi";
+import MovieData from "../../services/movieApi";
 import Header from "../../Components/Header";
 import { Container } from "../../commonStyle";
-import auth from "../../services/auth";
+import { motion } from "framer-motion";
+
+const movieVariants = {
+  initial: { opacity: 0 },
+  final: { opacity: 1, transition: { duration: 1 } },
+};
 
 const Watchlist = () => {
   const [movies, setMovies] = useState([]);
@@ -16,17 +21,19 @@ const Watchlist = () => {
   async function handleRemove(event) {
     if (authentication.isAuthenticated()) {
       const idMovie = event.target.id;
-      const response = await dbAPI.delete("/watchlist", { params: { idMovie } });
-      if(response.data.watchlist){
-        const newMovies = movies.filter((movie) => {
-          return movie.id !== Number(idMovie);
+      const response = await dbAPI.delete("/watchlist", {
+        params: { idMovie },
+      });
+      if (response.data.watchlist) {
+        let newMovies = [];
+        movies.forEach((movie) => {
+          if (movie) if (movie.id !== Number(idMovie)) newMovies.push(movie);
         });
         setMovies(newMovies);
-      }
-      else {
-        alert(response.data.message)
-        authentication.logout()
-        history.push("/")
+      } else {
+        alert(response.data.message);
+        authentication.logout();
+        history.push("/");
       }
     } else {
       alert("You don't have the permission to do this!");
@@ -42,10 +49,8 @@ const Watchlist = () => {
           let moviesWatchlist = await Promise.all(
             watchlist.map(async (current) => {
               if (current) {
-                let aux = await movieApi.get(
-                  `movie/${current}?api_key=${process.env.REACT_APP_MOVIE_API}`
-                );
-                return aux.data;
+                let aux = await MovieData.getMovie(current);
+                return aux;
               }
             })
           );
@@ -64,31 +69,33 @@ const Watchlist = () => {
     <>
       <Header watchlist />
       <Container>
-        <WatchlistContainer>
-          <section className="grid">
-            {movies.length ? (
-              movies.map((movie, index) => {
-                if (movie) {
-                  return (
-                    <div className="card" key={index}>
-                      <MovieCard
-                        idMovie={movie.id}
-                        title={movie.original_title}
-                        score={movie.vote_average}
-                        poster={movie.poster_path}
-                      />
-                      <RemoveButton id={movie.id} onClick={handleRemove}>
-                        Remove from watchlist
-                      </RemoveButton>
-                    </div>
-                  );
-                } else return movie;
-              })
-            ) : (
-              <h2>No movies yet</h2>
-            )}
-          </section>
-        </WatchlistContainer>
+        <motion.div initial="initial" animate="final" variants={movieVariants}>
+          <WatchlistContainer>
+            <section className="grid">
+              {movies.length ? (
+                movies.map((movie, index) => {
+                  if (movie) {
+                    return (
+                      <div className="card" key={index}>
+                        <MovieCard
+                          idMovie={movie.id}
+                          title={movie.original_title}
+                          score={movie.vote_average}
+                          poster={movie.poster_path}
+                        />
+                        <RemoveButton id={movie.id} onClick={handleRemove}>
+                          Remove from watchlist
+                        </RemoveButton>
+                      </div>
+                    );
+                  } else return movie;
+                })
+              ) : (
+                <h2>No movies yet</h2>
+              )}
+            </section>
+          </WatchlistContainer>
+        </motion.div>
       </Container>
     </>
   );

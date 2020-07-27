@@ -9,7 +9,6 @@ import SearchInput from './SearchInput'
 const Header = (props) => {
   const [loginOn, setLoginOn] = useState(auth.isAuthenticated());
 
-
   function handleLogout() {
     auth.logout();
     setLoginOn(false);

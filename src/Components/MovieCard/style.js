@@ -10,6 +10,7 @@ export const MovieContainer = styled.div`
   &:hover {
     cursor: pointer;
     border: 1px solid #107ee5;
+    background-color: #107ee5;
     position: relative;
     top: -20px;
     transition: all 0.5s;

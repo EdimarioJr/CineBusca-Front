@@ -6,6 +6,17 @@ import CineCarousel from "../../Components/Carousel";
 import MovieCard from "../../Components/MovieCard";
 import MovieData from "../../services/movieApi";
 import { LoadMore } from "../../commonStyle";
+import { motion } from "framer-motion";
+
+const cardVariants = {
+  initial: {
+    opacity: 0,
+  },
+  final: {
+    opacity: 1,
+    transition: { duration: 1 },
+  },
+};
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -13,35 +24,42 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      await MovieData.getPopularMovies(page)
-        .then((response) => {
-          if (page === 2) setMovies(response.results);
-          else {
-            const newMovies = [...movies, ...response.results];
-            setMovies(newMovies);
-          }
-        });
+      await MovieData.getPopularMovies(page).then((response) => {
+        if (page === 2) setMovies(response.results);
+        else {
+          const newMovies = [...movies, ...response.results];
+          setMovies(newMovies);
+        }
+      });
     })();
-    // eslint-disable-next-line
+    //eslint-disable-next-line
   }, [page]);
 
   return (
     <>
       <Header />
-      <CineCarousel />
+      <motion.div animate="final" initial="initial" variants={cardVariants}>
+        <CineCarousel />
+      </motion.div>
       <Container>
         <Main>
           <h1>Popular Movies</h1>
           <section className="grid-movies">
             {movies.map((movie, index) => {
               return (
-                <MovieCard
+                <motion.div
+                  animate="final"
+                  initial="initial"
+                  variants={cardVariants}
                   key={index}
-                  idMovie={movie.id}
-                  title={movie.original_title}
-                  score={movie.vote_average}
-                  poster={movie.poster_path}
-                />
+                >
+                  <MovieCard
+                    idMovie={movie.id}
+                    title={movie.original_title}
+                    score={movie.vote_average}
+                    poster={movie.poster_path}
+                  />
+                </motion.div>
               );
             })}
           </section>

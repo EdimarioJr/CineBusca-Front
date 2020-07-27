@@ -19,7 +19,6 @@ const CineCarousel = ({ idMovie }) => {
           });
     }
     fetchData();
-    //eslint-disable-next-line
   }, [idMovie]);
   return (
     <>

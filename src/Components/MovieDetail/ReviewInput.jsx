@@ -3,8 +3,18 @@ import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 import { ReviewContainer, AddReview, CancelReview } from "./style";
 import { useHistory } from "react-router-dom";
+import { motion } from "framer-motion";
 
-const ReviewInput = ({ id, director, title, isReview }) => {
+const reviewVariants = {
+  initial: { opacity: 0, y: -20 },
+  final: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+};
+
+const ReviewInput = ({ id, isReview }) => {
   const [review, setReview] = useState("");
   const history = useHistory();
 
@@ -25,7 +35,7 @@ const ReviewInput = ({ id, director, title, isReview }) => {
         });
       }
     })();
-  }, [id]);
+  }, [id, history]);
 
   async function handleAddReview() {
     if (auth.isAuthenticated()) {
@@ -45,18 +55,17 @@ const ReviewInput = ({ id, director, title, isReview }) => {
   }
   return (
     <ReviewContainer>
-      <h1>
-        {title} <span id="director">by {director}</span>
-      </h1>
-      <textarea
-        placeholder="Add a review..."
-        onChange={(event) => setReview(event.target.value)}
-        value={review}
-      ></textarea>
-      <div className="rowButtons">
-        <AddReview onClick={handleAddReview}>Add Review</AddReview>
-        <CancelReview onClick={handleCancelReview}>Cancel</CancelReview>
-      </div>
+      <motion.div initial="initial" animate="final" variants={reviewVariants}>
+        <textarea
+          placeholder="Add a review..."
+          onChange={(event) => setReview(event.target.value)}
+          value={review}
+        ></textarea>
+        <div className="rowButtons">
+          <AddReview onClick={handleAddReview}>Add Review</AddReview>
+          <CancelReview onClick={handleCancelReview}>Cancel</CancelReview>
+        </div>
+      </motion.div>
     </ReviewContainer>
   );
 };
