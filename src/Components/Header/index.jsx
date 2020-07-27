@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import CineBuscaLogo from "../../assets/cinebusca.png";
 import auth from "../../services/auth";
 import SearchInput from "./SearchInput";
-import { upAnimation } from "../../commonStyle";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Header = (props) => {
@@ -38,7 +37,6 @@ const Header = (props) => {
         {loginOn && (
           <UserNav
             key="nav"
-            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             watchlist={props.watchlist}

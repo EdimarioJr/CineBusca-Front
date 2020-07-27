@@ -6,7 +6,6 @@ import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 import { useHistory } from "react-router-dom";
 import { ReviewsContainer } from "./style";
-import { motion } from "framer-motion";
 import { opacityAnimation } from "../../commonStyle";
 import Loading from "../../Components/Loading";
 
@@ -44,33 +43,32 @@ const Reviews = () => {
     <>
       <Header review />
       <Container>
-        <motion.div
+        <ReviewsContainer
           initial="initial"
           animate="final"
           variants={opacityAnimation}
         >
-          <ReviewsContainer>
-            {!isLoading ? (
-              reviews.length !== 0 ? (
-                reviews.map((review, index) => {
-                  return (
-                    <ReviewCard
-                      idMovie={review.idMovie}
-                      review={review.review}
-                      date={review.date}
-                      deleteReview={handleDeleteReview}
-                      key={index}
-                    />
-                  );
-                })
-              ) : (
-                <h1>No reviews</h1>
-              )
+          {!isLoading ? (
+            reviews.length !== 0 ? (
+              reviews.map((review, index) => {
+                return (
+                  <ReviewCard
+                    exit={{ opacity: 0 }}
+                    idMovie={review.idMovie}
+                    review={review.review}
+                    date={review.date}
+                    deleteReview={handleDeleteReview}
+                    key={index}
+                  />
+                );
+              })
             ) : (
-              <Loading />
-            )}
-          </ReviewsContainer>
-        </motion.div>
+              <h1>No reviews</h1>
+            )
+          ) : (
+            <Loading />
+          )}
+        </ReviewsContainer>
       </Container>
     </>
   );

@@ -8,14 +8,20 @@ const Cast = ({ id, putDirector }) => {
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
+    let mount = true;
     (async () => {
       await MovieData.getMovieCast(id).then((response) => {
-        setCast(response.cast);
-        response.crew.forEach((current) => {
-          if (current.job === "Director") putDirector(current.name);
-        });
+        if (mount) {
+          setCast(response.cast);
+          response.crew.forEach((current) => {
+            if (current.job === "Director") putDirector(current.name);
+          });
+        }
       });
     })();
+    return () => {
+      mount = false;
+    };
     // eslint-disable-next-line
   }, [id]);
 

@@ -41,19 +41,21 @@ const Watchlist = () => {
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       dbAPI.get("/watchlist").then(async (response) => {
         let { watchlist, message } = response.data;
         if (watchlist) {
-          setIsLoading(true);
-          let moviesWatchlist = await Promise.all(
-            watchlist.map(async (current) => {
-              if (current) {
-                let aux = await MovieData.getMovie(current);
-                return aux;
-              }
-            })
-          );
-          setMovies(moviesWatchlist);
+          if (watchlist.length > 0) {
+            let moviesWatchlist = await Promise.all(
+              watchlist.map(async (current) => {
+                if (current) {
+                  let aux = await MovieData.getMovie(current);
+                  return aux;
+                }
+              })
+            );
+            setMovies(moviesWatchlist);
+          }
           setIsLoading(false);
         } else {
           alert(message);
@@ -72,37 +74,35 @@ const Watchlist = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          <motion.div
-            initial="initial"
-            animate="final"
-            variants={opacityAnimation}
-          >
-            <WatchlistContainer>
+          <WatchlistContainer>
+            {movies.length !== 0 ? (
               <section className="grid">
-                {movies.length ? (
-                  movies.map((movie, index) => {
-                    if (movie) {
-                      return (
-                        <div className="card" key={index}>
-                          <MovieCard
-                            idMovie={movie.id}
-                            title={movie.original_title}
-                            score={movie.vote_average}
-                            poster={movie.poster_path}
-                          />
-                          <RemoveButton id={movie.id} onClick={handleRemove}>
-                            Remove from watchlist
-                          </RemoveButton>
-                        </div>
-                      );
-                    } else return movie;
-                  })
-                ) : (
-                  <h2>No movies yet</h2>
-                )}
+                {movies.map((movie, index) => {
+                  return (
+                    <motion.div
+                      initial="initial"
+                      animate="final"
+                      variants={opacityAnimation}
+                      className="card"
+                      key={index}
+                    >
+                      <MovieCard
+                        idMovie={movie.id}
+                        title={movie.original_title}
+                        score={movie.vote_average}
+                        poster={movie.poster_path}
+                      />
+                      <RemoveButton id={movie.id} onClick={handleRemove}>
+                        Remove from watchlist
+                      </RemoveButton>
+                    </motion.div>
+                  );
+                })}
               </section>
-            </WatchlistContainer>
-          </motion.div>
+            ) : (
+              <h1>No movies</h1>
+            )}
+          </WatchlistContainer>
         )}
       </Container>
     </>

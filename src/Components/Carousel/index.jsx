@@ -11,19 +11,27 @@ const CineCarousel = ({ idMovie }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    let mount = true;
     async function fetchData() {
       setIsLoading(true);
       idMovie
         ? await MovieData.getMovieImages(idMovie).then((response) => {
-            setMovies(response.backdrops);
-            setIsLoading(false);
+            if (mount) {
+              setMovies(response.backdrops);
+              setIsLoading(false);
+            }
           })
         : await MovieData.getPopularMovies().then((response) => {
-            setMovies(response.results);
-            setIsLoading(false);
+            if (mount) {
+              setMovies(response.results);
+              setIsLoading(false);
+            }
           });
     }
     fetchData();
+    return () => {
+      mount = false;
+    };
   }, [idMovie]);
   return (
     <>

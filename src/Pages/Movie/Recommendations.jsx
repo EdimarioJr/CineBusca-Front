@@ -8,11 +8,16 @@ const Recommendations = ({ id, movieTitle }) => {
   const [recommendations, setRecommendations] = useState([]);
 
   useEffect(() => {
+    let mount = true;
     (async () => {
       await MovieData.getMovieRecommendations(id).then((response) => {
-        setRecommendations(response.results);
+        if (mount) setRecommendations(response.results);
       });
     })();
+
+    return () => {
+      mount = false;
+    };
   }, [id]);
 
   return (
