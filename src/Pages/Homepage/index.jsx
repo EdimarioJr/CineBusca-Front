@@ -7,16 +7,7 @@ import MovieCard from "../../Components/MovieCard";
 import MovieData from "../../services/movieApi";
 import { LoadMore } from "../../commonStyle";
 import { motion } from "framer-motion";
-
-const cardVariants = {
-  initial: {
-    opacity: 0,
-  },
-  final: {
-    opacity: 1,
-    transition: { duration: 1 },
-  },
-};
+import { opacityAnimation } from "../../commonStyle";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -38,7 +29,7 @@ function App() {
   return (
     <>
       <Header />
-      <motion.div animate="final" initial="initial" variants={cardVariants}>
+      <motion.div animate="final" initial="initial" variants={opacityAnimation}>
         <CineCarousel />
       </motion.div>
       <Container>
@@ -50,7 +41,7 @@ function App() {
                 <motion.div
                   animate="final"
                   initial="initial"
-                  variants={cardVariants}
+                  variants={opacityAnimation}
                   key={index}
                 >
                   <MovieCard

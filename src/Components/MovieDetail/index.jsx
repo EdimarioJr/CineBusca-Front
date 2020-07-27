@@ -12,20 +12,8 @@ import ReviewInput from "./ReviewInput";
 import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 import { motion } from "framer-motion";
+import {upAnimation,opacityAnimation} from '../../commonStyle'
 
-const movieVariants = {
-  initial: { opacity: 0 },
-  final: { opacity: 1, transition: { duration: 0.5 } },
-};
-
-const reviewVariants = {
-  initial: { opacity: 0, y: -20 },
-  final: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5 },
-  },
-};
 
 const MovieDetail = (props) => {
   /* 
@@ -84,7 +72,7 @@ const MovieDetail = (props) => {
 
   return (
     <>
-      <motion.div initial="initial" animate="final" variants={movieVariants}>
+      <motion.div initial="initial" animate="final" variants={opacityAnimation}>
         <MovieContainer>
           <img
             src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
@@ -108,7 +96,7 @@ const MovieDetail = (props) => {
               </section>
             ) : (
               <>
-                <motion.section className="info" variants={reviewVariants} initial="initial" animate="final">
+                <motion.section className="info" variants={upAnimation} initial="initial" animate="final">
                   <h1>
                     {title} <span id="director">by {director}</span>
                   </h1>

@@ -16,7 +16,7 @@ const Header = (props) => {
 
   return (
     <Container>
-      <HeaderRow>
+      <HeaderRow >
         <Link to="/" style={{ textDecoration: "none" }}>
           <img src={CineBuscaLogo} alt="logo cinebusca" />
         </Link>

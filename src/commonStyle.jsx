@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
+import { motion } from "framer-motion";
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -20,7 +21,7 @@ export const Container = styled.div`
   margin: 0 auto;
 `;
 
-export const FlexRowBetween = styled.div`
+export const FlexRowBetween = styled(motion.div)`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -48,3 +49,17 @@ export const LoadMore = styled(CommonButton)`
   font-weight: 700;
   font-size: 24px;
 `;
+
+export const upAnimation = {
+  initial: { opacity: 0, y: -20 },
+  final: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+};
+
+export const opacityAnimation = {
+  initial: { opacity: 0 },
+  final: { opacity: 1, transition: { duration: 1 } },
+};

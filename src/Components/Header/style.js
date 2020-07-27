@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { CommonButton, FlexRowBetween } from "../../commonStyle";
 
+
 export const DivSearch = styled.div`
   width: 60%;
   height: 35px;
@@ -27,6 +28,8 @@ export const DivSearch = styled.div`
 
 export const HeaderRow = styled(FlexRowBetween)`
   margin: 10px 0;
+  position: sticky;
+  top: 0;
 
   img {
     width: 100px;

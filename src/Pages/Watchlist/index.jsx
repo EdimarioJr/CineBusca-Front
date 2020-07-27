@@ -8,11 +8,7 @@ import MovieData from "../../services/movieApi";
 import Header from "../../Components/Header";
 import { Container } from "../../commonStyle";
 import { motion } from "framer-motion";
-
-const movieVariants = {
-  initial: { opacity: 0 },
-  final: { opacity: 1, transition: { duration: 1 } },
-};
+import {opacityAnimation} from '../../commonStyle'
 
 const Watchlist = () => {
   const [movies, setMovies] = useState([]);
@@ -69,7 +65,7 @@ const Watchlist = () => {
     <>
       <Header watchlist />
       <Container>
-        <motion.div initial="initial" animate="final" variants={movieVariants}>
+        <motion.div initial="initial" animate="final" variants={opacityAnimation}>
           <WatchlistContainer>
             <section className="grid">
               {movies.length ? (

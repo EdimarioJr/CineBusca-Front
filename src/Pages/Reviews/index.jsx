@@ -7,11 +7,7 @@ import auth from "../../services/auth";
 import { useHistory } from "react-router-dom";
 import { ReviewsContainer } from "./style";
 import { motion } from "framer-motion";
-
-const movieVariants = {
-  initial: { opacity: 0 },
-  final: { opacity: 1, transition: { duration: 1 } },
-};
+import {opacityAnimation} from '../../commonStyle'
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -44,7 +40,7 @@ const Reviews = () => {
     <>
       <Header review />
       <Container>
-        <motion.div initial="initial" animate="final" variants={movieVariants}>
+        <motion.div initial="initial" animate="final" variants={opacityAnimation}>
           <ReviewsContainer>
             {reviews.length !== 0 ? (
               reviews.map((review, index) => {
