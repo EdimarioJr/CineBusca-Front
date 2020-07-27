@@ -12,8 +12,7 @@ import ReviewInput from "./ReviewInput";
 import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 import { motion } from "framer-motion";
-import {upAnimation,opacityAnimation} from '../../commonStyle'
-
+import { upAnimation, opacityAnimation } from "../../commonStyle";
 
 const MovieDetail = (props) => {
   /* 
@@ -89,14 +88,16 @@ const MovieDetail = (props) => {
                 <h1>
                   {title} <span id="director">by {director}</span>
                 </h1>
-                <ReviewInput
-                  id={id}
-                  isReview={setModeReview}
-                />
+                <ReviewInput id={id} isReview={setModeReview} />
               </section>
             ) : (
               <>
-                <motion.section className="info" variants={upAnimation} initial="initial" animate="final">
+                <motion.section
+                  className="info"
+                  variants={upAnimation}
+                  initial="initial"
+                  animate="final"
+                >
                   <h1>
                     {title} <span id="director">by {director}</span>
                   </h1>

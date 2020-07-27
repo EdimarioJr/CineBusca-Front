@@ -4,7 +4,9 @@ import { HeaderRow, InputsRow, UserNav } from "./style";
 import { Link } from "react-router-dom";
 import CineBuscaLogo from "../../assets/cinebusca.png";
 import auth from "../../services/auth";
-import SearchInput from './SearchInput'
+import SearchInput from "./SearchInput";
+import { upAnimation } from "../../commonStyle";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Header = (props) => {
   const [loginOn, setLoginOn] = useState(auth.isAuthenticated());
@@ -16,12 +18,12 @@ const Header = (props) => {
 
   return (
     <Container>
-      <HeaderRow >
+      <HeaderRow>
         <Link to="/" style={{ textDecoration: "none" }}>
           <img src={CineBuscaLogo} alt="logo cinebusca" />
         </Link>
         <InputsRow>
-          <SearchInput/>
+          <SearchInput />
           {loginOn ? (
             <CommonButton onClick={handleLogout}>LOGOUT</CommonButton>
           ) : (
@@ -31,18 +33,26 @@ const Header = (props) => {
           )}
         </InputsRow>
       </HeaderRow>
-      {loginOn ? (
-        <UserNav watchlist={props.watchlist} review={props.review}>
-          <Link to="/watchlist" style={{ textDecoration: "none" }}>
-            <h3 id="watch">WATCHLIST</h3>
-          </Link>
-          <Link to="/reviews" style={{ textDecoration: "none" }}>
-            <h3 id="review">REVIEWS</h3>
-          </Link>
-        </UserNav>
-      ) : (
-        ""
-      )}
+
+      <AnimatePresence>
+        {loginOn && (
+          <UserNav
+            key="nav"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            watchlist={props.watchlist}
+            review={props.review}
+          >
+            <Link to="/watchlist" style={{ textDecoration: "none" }}>
+              <motion.h3 id="watch">WATCHLIST</motion.h3>
+            </Link>
+            <Link to="/reviews" style={{ textDecoration: "none" }}>
+              <motion.h3 id="review">REVIEWS</motion.h3>
+            </Link>
+          </UserNav>
+        )}
+      </AnimatePresence>
     </Container>
   );
 };

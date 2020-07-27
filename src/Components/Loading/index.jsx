@@ -16,17 +16,20 @@ const LoadingContainer = styled(motion.div)`
   height: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
 `;
 
 const loadingContainerVariants = {
   start: {
     transition: {
-      staggerChildren: 0.3,
+      staggerChildren: 0.4,
     },
   },
   end: {
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.4,
     },
   },
 };

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CommonButton, FlexRowBetween } from "../../commonStyle";
-
+import { motion } from "framer-motion";
 
 export const DivSearch = styled.div`
   width: 60%;
@@ -28,8 +28,6 @@ export const DivSearch = styled.div`
 
 export const HeaderRow = styled(FlexRowBetween)`
   margin: 10px 0;
-  position: sticky;
-  top: 0;
 
   img {
     width: 100px;
@@ -49,7 +47,7 @@ export const WatchlistButton = styled(CommonButton)`
   background-color: #05a6da;
 `;
 
-export const UserNav = styled.nav`
+export const UserNav = styled(motion.nav)`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -71,8 +69,7 @@ export const UserNav = styled.nav`
   }
 
   #watch {
-    background-color: ${(props) =>
-      props.watchlist ? "#107ee5" : ""};
+    background-color: ${(props) => (props.watchlist ? "#107ee5" : "")};
   }
 
   #review {

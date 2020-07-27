@@ -7,24 +7,28 @@ import auth from "../../services/auth";
 import { useHistory } from "react-router-dom";
 import { ReviewsContainer } from "./style";
 import { motion } from "framer-motion";
-import {opacityAnimation} from '../../commonStyle'
+import { opacityAnimation } from "../../commonStyle";
+import Loading from "../../Components/Loading";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
     (async () => {
-      if (auth.isAuthenticated())
-        await dbAPI.get("/reviews").then((response) => {
-          const { reviews, message } = response.data;
-          if (reviews) setReviews(reviews);
-          else {
-            auth.logout();
-            alert(message);
-            history.push("/");
-          }
-        });
+      if (auth.isAuthenticated()) setIsLoading(true);
+      await dbAPI.get("/reviews").then((response) => {
+        const { reviews, message } = response.data;
+        if (reviews) {
+          setReviews(reviews);
+          setIsLoading(false);
+        } else {
+          auth.logout();
+          alert(message);
+          history.push("/");
+        }
+      });
     })();
     //eslint-disable-next-line
   }, []);
@@ -40,22 +44,30 @@ const Reviews = () => {
     <>
       <Header review />
       <Container>
-        <motion.div initial="initial" animate="final" variants={opacityAnimation}>
+        <motion.div
+          initial="initial"
+          animate="final"
+          variants={opacityAnimation}
+        >
           <ReviewsContainer>
-            {reviews.length !== 0 ? (
-              reviews.map((review, index) => {
-                return (
-                  <ReviewCard
-                    idMovie={review.idMovie}
-                    review={review.review}
-                    date={review.date}
-                    deleteReview={handleDeleteReview}
-                    key={index}
-                  />
-                );
-              })
+            {!isLoading ? (
+              reviews.length !== 0 ? (
+                reviews.map((review, index) => {
+                  return (
+                    <ReviewCard
+                      idMovie={review.idMovie}
+                      review={review.review}
+                      date={review.date}
+                      deleteReview={handleDeleteReview}
+                      key={index}
+                    />
+                  );
+                })
+              ) : (
+                <h1>No reviews</h1>
+              )
             ) : (
-              <h1>No reviews</h1>
+              <Loading />
             )}
           </ReviewsContainer>
         </motion.div>
