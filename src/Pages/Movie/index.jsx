@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MovieData from "../../services/movieApi";
 import { Gallery } from "./style";
-import { Container } from "../../commonStyle";
+import { ContainerPages } from "../../commonStyle";
 import MovieDetail from "../../Components/MovieDetail";
 import Header from "../../Components/Header";
 import PropTypes from "prop-types";
@@ -33,7 +33,7 @@ const Movie = (props) => {
   return (
     <>
       <Header />
-      <Container>
+      <ContainerPages>
         {!isLoading ? (
           movie ? (
             <>
@@ -53,7 +53,7 @@ const Movie = (props) => {
         ) : (
           <Loading />
         )}
-      </Container>
+      </ContainerPages>
       <Footer/>
     </>
   );
