@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Main } from "./style";
 import { Container } from "../../commonStyle";
 import Header from "../../Components/Header";
+import Footer from "../../Components/Footer";
 import CineCarousel from "../../Components/Carousel";
 import MovieCard from "../../Components/MovieCard";
 import MovieData from "../../services/movieApi";
@@ -66,6 +67,7 @@ function App() {
           </LoadMore>
         </Main>
       </Container>
+      <Footer />
     </>
   );
 }

@@ -6,10 +6,11 @@ import { useHistory } from "react-router-dom";
 import dbAPI from "../../services/dbAPI";
 import MovieData from "../../services/movieApi";
 import Header from "../../Components/Header";
-import { Container } from "../../commonStyle";
+import { ContainerPages } from "../../commonStyle";
 import { motion } from "framer-motion";
 import { opacityAnimation } from "../../commonStyle";
 import Loading from "../../Components/Loading";
+import Footer from "../../Components/Footer";
 
 const Watchlist = () => {
   const [movies, setMovies] = useState([]);
@@ -41,7 +42,8 @@ const Watchlist = () => {
   }
 
   useEffect(() => {
-    let isMounted = true(async () => {
+    let isMounted = true;
+    (async () => {
       setIsLoading(true);
       dbAPI.get("/watchlist").then(async (response) => {
         let { watchlist, message } = response.data;
@@ -76,7 +78,7 @@ const Watchlist = () => {
   return (
     <>
       <Header watchlist />
-      <Container>
+      <ContainerPages>
         {isLoading ? (
           <Loading />
         ) : (
@@ -110,7 +112,8 @@ const Watchlist = () => {
             )}
           </WatchlistContainer>
         )}
-      </Container>
+      </ContainerPages>
+      <Footer />
     </>
   );
 };

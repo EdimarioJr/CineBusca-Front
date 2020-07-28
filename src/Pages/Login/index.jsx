@@ -6,6 +6,7 @@ import Header from "../../Components/Header";
 import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 import { motion } from "framer-motion";
+import Footer from '../../Components/Footer'
 
 // login Animation
 const loginVariants = {
@@ -96,6 +97,7 @@ const Login = () => {
           </LoginContainer>
         </motion.div>
       </Container>
+      <Footer/>
     </>
   );
 };

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../Components/Header";
 import ReviewCard from "../../Components/ReviewCard";
-import { Container } from "../../commonStyle";
+import { ContainerPages } from "../../commonStyle";
 import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 import { useHistory } from "react-router-dom";
 import { ReviewsContainer } from "./style";
 import { opacityAnimation } from "../../commonStyle";
 import Loading from "../../Components/Loading";
+import Footer from '../../Components/Footer'
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -49,7 +50,7 @@ const Reviews = () => {
   return (
     <>
       <Header review />
-      <Container>
+      <ContainerPages>
         <ReviewsContainer
           initial="initial"
           animate="final"
@@ -76,7 +77,8 @@ const Reviews = () => {
             <Loading />
           )}
         </ReviewsContainer>
-      </Container>
+      </ContainerPages>
+      <Footer/>
     </>
   );
 };

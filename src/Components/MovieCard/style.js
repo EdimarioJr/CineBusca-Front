@@ -6,9 +6,9 @@ export const MovieContainer = styled.div`
   width: 275px;
   height: 460px;
   border-radius: 7px;
+  cursor: pointer;
 
   &:hover {
-    cursor: pointer;
     border: 1px solid #107ee5;
     background-color: #107ee5;
     position: relative;

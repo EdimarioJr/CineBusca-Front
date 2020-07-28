@@ -8,11 +8,17 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html{
+    height: 100%;
+    min-height: 100%;
+  }
+
   body {
     background-color: #20242b;
     font-family: "Poppins", sans-serif;
     font-size: 16px;
     height: 100%;
+    min-height: 100%;
   }
 `;
 
@@ -20,6 +26,10 @@ export const Container = styled.div`
   width: 85%;
   margin: 0 auto;
 `;
+
+export const ContainerPages = styled(Container)`
+  min-height: calc(100vh - 345px);
+`
 
 export const FlexRowBetween = styled(motion.div)`
   display: flex;

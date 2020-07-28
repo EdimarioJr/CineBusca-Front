@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../../Components/Header";
-import { Container, LoadMore } from "../../commonStyle";
+import { ContainerPages, LoadMore } from "../../commonStyle";
 import MovieCard from "../../Components/MovieCard";
 import { SearchContainer } from "./style";
 import MovieData from "../../services/movieApi";
 import { motion } from "framer-motion";
 import { opacityAnimation } from "../../commonStyle";
+import Footer from "../../Components/Footer";
 
 const SearchResults = () => {
   const [movies, setMovies] = useState([]);
@@ -49,7 +50,7 @@ const SearchResults = () => {
   return (
     <>
       <Header />
-      <Container>
+      <ContainerPages>
         <SearchContainer>
           <h1>Search Results</h1>
           {movies.length !== 0 ? (
@@ -84,7 +85,8 @@ const SearchResults = () => {
             Load More Search Results
           </LoadMore>
         )}
-      </Container>
+      </ContainerPages>
+      <Footer />
     </>
   );
 };

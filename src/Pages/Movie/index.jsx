@@ -9,6 +9,7 @@ import Carousel from "../../Components/Carousel";
 import Cast from "./Cast";
 import Recommendations from "./Recommendations";
 import Loading from "../../Components/Loading";
+import Footer from '../../Components/Footer'
 
 const Movie = (props) => {
   const [movie, setMovie] = useState(null);
@@ -53,6 +54,7 @@ const Movie = (props) => {
           <Loading />
         )}
       </Container>
+      <Footer/>
     </>
   );
 };
