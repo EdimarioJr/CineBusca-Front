@@ -8,6 +8,7 @@ import Reviews from "./Pages/Reviews";
 import Search from "./Pages/Search";
 import auth from "./services/auth";
 
+// Preventing the unlogged user from accessing the route directly from the browser url
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}

@@ -23,6 +23,7 @@ const Watchlist = () => {
         params: { idMovie },
       });
       if (response.data.watchlist) {
+        // if the delete op was successful, it will update the local movies watchlist state
         let newMovies = [];
         movies.forEach((movie) => {
           if (movie) if (movie.id !== Number(idMovie)) newMovies.push(movie);
@@ -40,12 +41,13 @@ const Watchlist = () => {
   }
 
   useEffect(() => {
-    (async () => {
+    let isMounted = true(async () => {
       setIsLoading(true);
       dbAPI.get("/watchlist").then(async (response) => {
         let { watchlist, message } = response.data;
         if (watchlist) {
-          if (watchlist.length > 0) {
+          if (watchlist.length > 0 && isMounted) {
+            // getting each movie info from the movie api
             let moviesWatchlist = await Promise.all(
               watchlist.map(async (current) => {
                 if (current) {
@@ -64,6 +66,10 @@ const Watchlist = () => {
         }
       });
     })();
+
+    return () => {
+      isMounted = false;
+    };
     //eslint-disable-next-line
   }, []);
 

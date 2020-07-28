@@ -14,9 +14,11 @@ function App() {
   const [page, setPage] = useState(2);
 
   useEffect(() => {
+    // begins in page 2 because the carousel queries the page 1 of popular movies
     (async () => {
       await MovieData.getPopularMovies(page).then((response) => {
         if (page === 2) setMovies(response.results);
+        // if page> 2, the movies will be pushed to the movies state, instead of be replaced after each query
         else {
           const newMovies = [...movies, ...response.results];
           setMovies(newMovies);

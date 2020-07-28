@@ -27,11 +27,13 @@ const ReviewCard = ({ idMovie, date, review, deleteReview }) => {
       if(response.data.review) 
         deleteReview(idMovie);
       else {
+        // if the token expires will enter in this else
         alert(response.data.message)
         auth.logout()
         history.push("/")
       }
     } else {
+      // if there is no token in the sessionStorage
       alert("You don't have the permission to do this!");
       history.push("/login");
     }

@@ -10,29 +10,29 @@ const CineCarousel = ({ idMovie }) => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  // fetch the movies Images.
   useEffect(() => {
-    let mount = true;
+    // prevent memory leaks, the component will only set the State if its mounted
+    let isMounted = true;
+    setIsLoading(true);
     async function fetchData() {
-      setIsLoading(true);
-      idMovie
+      idMovie && isMounted
         ? await MovieData.getMovieImages(idMovie).then((response) => {
-            if (mount) {
-              setMovies(response.backdrops);
-              setIsLoading(false);
-            }
+            setMovies(response.backdrops);
+            setIsLoading(false);
           })
         : await MovieData.getPopularMovies().then((response) => {
-            if (mount) {
-              setMovies(response.results);
-              setIsLoading(false);
-            }
+            setMovies(response.results);
+            setIsLoading(false);
           });
     }
     fetchData();
+
     return () => {
-      mount = false;
+      isMounted = false;
     };
   }, [idMovie]);
+
   return (
     <>
       <DivCarousel>

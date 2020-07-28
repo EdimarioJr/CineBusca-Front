@@ -8,11 +8,11 @@ import SearchInput from "./SearchInput";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Header = (props) => {
-  const [loginOn, setLoginOn] = useState(auth.isAuthenticated());
+  const [isLogged, setIsLogged] = useState(auth.isAuthenticated());
 
   function handleLogout() {
     auth.logout();
-    setLoginOn(false);
+    setIsLogged(false);
   }
 
   return (
@@ -23,7 +23,7 @@ const Header = (props) => {
         </Link>
         <InputsRow>
           <SearchInput />
-          {loginOn ? (
+          {isLogged ? (
             <CommonButton onClick={handleLogout}>LOGOUT</CommonButton>
           ) : (
             <Link to="/login" style={{ textDecoration: "none" }}>
@@ -32,9 +32,11 @@ const Header = (props) => {
           )}
         </InputsRow>
       </HeaderRow>
-
+          {
+            // The Animate Presence will animate the exit of the user nav
+          }
       <AnimatePresence>
-        {loginOn && (
+        {isLogged && (
           <UserNav
             key="nav"
             animate={{ opacity: 1 }}

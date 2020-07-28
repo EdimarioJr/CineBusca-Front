@@ -15,23 +15,30 @@ const Reviews = () => {
   const history = useHistory();
 
   useEffect(() => {
+    let isMounted = true;
     (async () => {
-      if (auth.isAuthenticated()) setIsLoading(true);
-      await dbAPI.get("/reviews").then((response) => {
-        const { reviews, message } = response.data;
-        if (reviews) {
-          setReviews(reviews);
-          setIsLoading(false);
-        } else {
-          auth.logout();
-          alert(message);
-          history.push("/");
-        }
-      });
+      if (auth.isAuthenticated()) {
+        setIsLoading(true);
+        await dbAPI.get("/reviews").then((response) => {
+          const { reviews, message } = response.data;
+          if (reviews) {
+            if (isMounted) {
+              setReviews(reviews);
+              setIsLoading(false);
+            }
+          } else {
+            auth.logout();
+            alert(message);
+            history.push("/");
+          }
+        });
+      }
     })();
-    //eslint-disable-next-line
-  }, []);
 
+    return () => (isMounted = false);
+  }, [history]);
+
+  // updating the reviews state after a delete
   function handleDeleteReview(id) {
     const newReviews = reviews.filter((current) => {
       return current.idMovie !== id;

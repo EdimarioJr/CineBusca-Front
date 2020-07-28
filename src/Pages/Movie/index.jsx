@@ -14,18 +14,20 @@ const Movie = (props) => {
   const [movie, setMovie] = useState(null);
   const [director, setDirector] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const id = props.match.params.id;
+  const idMovie = props.match.params.id;
 
   useEffect(() => {
     (async () => {
+      // everytimes the movie is changed , will scroll to the top,fetch the data from the new movie and render the
+      // loading component
       setIsLoading(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
-      await MovieData.getMovie(id).then((response) => {
+      await MovieData.getMovie(idMovie).then((response) => {
         setMovie(response);
         setIsLoading(false);
       });
     })();
-  }, [id]);
+  }, [idMovie]);
 
   return (
     <>
@@ -35,11 +37,14 @@ const Movie = (props) => {
           movie ? (
             <>
               <MovieDetail movieInfo={{ ...movie, director }} />
-              <Cast putDirector={setDirector} id={id} />
+              <Cast putDirector={setDirector} idMovie={idMovie} />
               <Gallery>
-                <Carousel idMovie={id} />
+                <Carousel idMovie={idMovie} />
               </Gallery>
-              <Recommendations id={id} movieTitle={movie.original_title} />
+              <Recommendations
+                idMovie={idMovie}
+                movieTitle={movie.original_title}
+              />
             </>
           ) : (
             ""

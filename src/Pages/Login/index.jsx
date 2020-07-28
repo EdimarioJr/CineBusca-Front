@@ -5,8 +5,9 @@ import { Container, CommonButton } from "../../commonStyle";
 import Header from "../../Components/Header";
 import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
-import {motion} from 'framer-motion'
+import { motion } from "framer-motion";
 
+// login Animation
 const loginVariants = {
   initial: { opacity: 0, x: -200 },
   final: {
@@ -17,18 +18,20 @@ const loginVariants = {
 };
 
 const Login = () => {
-  const [nameUser, setNameUser] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [signUp, setSignUp] = useState(false);
   const history = useHistory();
 
   function handleSubmit() {
-    const name = nameUser.trim();
+    const name = username.trim();
+    // will only try to do the sign in/sign up if the the user fill the two inputs
     name && password
       ? signUp
         ? dbAPI.post("/signup", { name, password }).then((response) => {
             const data = response.data;
             if (data.signup) {
+              // when the signup is successful, will login and redirect to home automatically
               dbAPI.post("/signin", { name, password }).then((response) => {
                 const data = response.data;
                 auth.login(data.token);
@@ -61,8 +64,8 @@ const Login = () => {
                     type="text"
                     name="name"
                     placeholder="Name"
-                    onChange={(event) => setNameUser(event.target.value)}
-                    value={nameUser}
+                    onChange={(event) => setUsername(event.target.value)}
+                    value={username}
                   />
                 </div>
                 <div>

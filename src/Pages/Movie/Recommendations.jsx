@@ -4,21 +4,21 @@ import { RecommendationsContainer } from "./style";
 import PropTypes from "prop-types";
 import MovieCard from "../../Components/MovieCard";
 
-const Recommendations = ({ id, movieTitle }) => {
+const Recommendations = ({ idMovie, movieTitle }) => {
   const [recommendations, setRecommendations] = useState([]);
 
   useEffect(() => {
-    let mount = true;
+    let isMounted = true;
     (async () => {
-      await MovieData.getMovieRecommendations(id).then((response) => {
-        if (mount) setRecommendations(response.results);
+      await MovieData.getMovieRecommendations(idMovie).then((response) => {
+        if (isMounted) setRecommendations(response.results);
       });
     })();
 
     return () => {
-      mount = false;
+      isMounted = false;
     };
-  }, [id]);
+  }, [idMovie]);
 
   return (
     <RecommendationsContainer>
@@ -27,12 +27,13 @@ const Recommendations = ({ id, movieTitle }) => {
       </h1>
       <div className="recommendation-grid">
         {recommendations.slice(0, 8).map((movie, index) => {
+          const { id, original_title, vote_average, poster_path } = movie;
           return (
             <MovieCard
-              idMovie={movie.id}
-              title={movie.original_title}
-              score={movie.vote_average}
-              poster={movie.poster_path}
+              idMovie={id}
+              title={original_title}
+              score={vote_average}
+              poster={poster_path}
               key={index}
             />
           );
@@ -43,7 +44,7 @@ const Recommendations = ({ id, movieTitle }) => {
 };
 
 Recommendations.propTypes = {
-  id: PropTypes.string,
+  idMovie: PropTypes.string,
   movieTitle: PropTypes.string,
 };
 

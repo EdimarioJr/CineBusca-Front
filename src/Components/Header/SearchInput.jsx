@@ -8,6 +8,7 @@ const SearchInput = () => {
 
   function submitSearch() {
     if (search) {
+      // redirects to the search page with the query that the page will resolve
       history.push({
         pathname: "/search",
         search: search,

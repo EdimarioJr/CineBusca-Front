@@ -4,6 +4,7 @@ const movieApi = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
 });
 
+// centralizing all the api requests
 const MovieData = {
   getPopularMovies: async (page) => {
     if (page) {

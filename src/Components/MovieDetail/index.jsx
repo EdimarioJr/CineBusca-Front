@@ -20,7 +20,7 @@ const MovieDetail = (props) => {
     if the user want to write a review bout the movie
   */
   const [inWatchlist, setInWatchlist] = useState(false);
-  const [modeReview, setModeReview] = useState(false);
+  const [reviewMode, setReviewMode] = useState(false);
   const {
     id,
     poster_path,
@@ -36,18 +36,17 @@ const MovieDetail = (props) => {
 
   useEffect(() => {
     // everytime that the movie change the mode review is reseted
-    setModeReview(false);
+    setReviewMode(false);
     (async () => {
       // if the sessionStorage has a valid token
       if (auth.isAuthenticated()) {
         dbAPI.get("/watchlist").then((response) => {
           const { watchlist } = response.data;
-          // if DB returns a succesful watchlist operation flag
-          if (watchlist)
-            if (watchlist.includes(String(id))) {
-              // see if the movie is in watchlist and set the watchlist state flag based on the response
-              setInWatchlist(true);
-            } else setInWatchlist(false);
+          /* if DB returns a succesful watchlist operation flag  &&
+          if the movie is in watchlist */
+          if (watchlist && watchlist.includes(String(id))) {
+            setInWatchlist(true);
+          } else setInWatchlist(false);
         });
       }
     })();
@@ -83,13 +82,18 @@ const MovieDetail = (props) => {
             <BackgroundFilter
               back={`https://image.tmdb.org/t/p/w185/${poster_path}`}
             />
-            {modeReview ? (
-              <section className="info">
+            {reviewMode ? (
+              <motion.section
+                className="info"
+                variants={upAnimation}
+                initial="initial"
+                animate="final"
+              >
                 <h1>
                   {title} <span id="director">by {director}</span>
                 </h1>
-                <ReviewInput id={id} isReview={setModeReview} />
-              </section>
+                <ReviewInput idMovie={id} isReview={setReviewMode} />
+              </motion.section>
             ) : (
               <>
                 <motion.section
@@ -108,7 +112,7 @@ const MovieDetail = (props) => {
                           ? "Remove from Watchlist"
                           : "Add to your Watchlist"}
                       </WatchButton>
-                      <ReviewButton onClick={() => setModeReview(true)}>
+                      <ReviewButton onClick={() => setReviewMode(true)}>
                         Review
                       </ReviewButton>
                     </nav>

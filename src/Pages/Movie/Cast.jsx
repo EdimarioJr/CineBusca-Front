@@ -4,15 +4,17 @@ import NoImage from "../../assets/no-image.jpg";
 import PropTypes from "prop-types";
 import MovieData from "../../services/movieApi";
 
-const Cast = ({ id, putDirector }) => {
+const Cast = ({ idMovie, putDirector }) => {
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
-    let mount = true;
+    // flag that avoids memory leak
+    let isMounted = true;
     (async () => {
-      await MovieData.getMovieCast(id).then((response) => {
-        if (mount) {
+      await MovieData.getMovieCast(idMovie).then((response) => {
+        if (isMounted) {
           setCast(response.cast);
+          // finding the director and setting in the Movie Component Page through render props
           response.crew.forEach((current) => {
             if (current.job === "Director") putDirector(current.name);
           });
@@ -20,10 +22,9 @@ const Cast = ({ id, putDirector }) => {
       });
     })();
     return () => {
-      mount = false;
+      isMounted = false;
     };
-    // eslint-disable-next-line
-  }, [id]);
+  }, [idMovie, putDirector]);
 
   return (
     <CastContainer>
@@ -52,7 +53,7 @@ const Cast = ({ id, putDirector }) => {
 };
 
 Cast.propTypes = {
-  id: PropTypes.string,
+  idMovie: PropTypes.string,
   putDirector: PropTypes.func,
 };
 

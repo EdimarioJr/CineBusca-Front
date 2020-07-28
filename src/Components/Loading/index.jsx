@@ -1,26 +1,7 @@
 import React from "react";
-import styled from "styled-components";
-import { motion } from "framer-motion";
+import { Ball, LoadingContainer } from "./style";
 
-const Ball = styled(motion.span)`
-  display: block;
-  background-color: white;
-  width: 20px;
-  height: 20px;
-  border-radius: 20px;
-  margin-right: 10px;
-`;
-
-const LoadingContainer = styled(motion.div)`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin: 20px 0;
-`;
-
+// the Container will apply a delay ( staggerChildren) in the children animation
 const loadingContainerVariants = {
   start: {
     transition: {
@@ -34,15 +15,17 @@ const loadingContainerVariants = {
   },
 };
 
+// the animation of the children
 const loadingBallVariants = {
   start: {
-    y: "50%"
+    y: "50%",
   },
   end: {
-    y: "150%"
+    y: "150%",
   },
 };
 
+// the animation will always repeat
 const loadingBallTransition = {
   duration: 0.5,
   yoyo: Infinity,
@@ -58,17 +41,14 @@ const Loading = () => {
         variants={loadingContainerVariants}
       >
         <Ball
-          custom={1}
           variants={loadingBallVariants}
           transition={loadingBallTransition}
         />
         <Ball
-          custom={2}
           variants={loadingBallVariants}
           transition={loadingBallTransition}
         />
         <Ball
-          custom={3}
           variants={loadingBallVariants}
           transition={loadingBallTransition}
         />
