@@ -63,7 +63,7 @@ const Login = () => {
                   <p>Name:</p>
                   <input
                     type="text"
-                    name="name"
+                    name="username"
                     placeholder="Name"
                     onChange={(event) => setUsername(event.target.value)}
                     value={username}

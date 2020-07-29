@@ -26,18 +26,20 @@ const Recommendations = ({ idMovie, movieTitle }) => {
         If you like <span>{movieTitle}</span>, you would like these...
       </h1>
       <div className="recommendation-grid">
-        {recommendations.slice(0, 8).map((movie, index) => {
-          const { id, original_title, vote_average, poster_path } = movie;
-          return (
-            <MovieCard
-              idMovie={id}
-              title={original_title}
-              score={vote_average}
-              poster={poster_path}
-              key={index}
-            />
-          );
-        })}
+        {recommendations
+          ? recommendations.slice(0, 8).map((movie, index) => {
+              const { id, original_title, vote_average, poster_path } = movie;
+              return (
+                <MovieCard
+                  idMovie={id}
+                  title={original_title}
+                  score={vote_average}
+                  poster={poster_path}
+                  key={index}
+                />
+              );
+            })
+          : ""}
       </div>
     </RecommendationsContainer>
   );
