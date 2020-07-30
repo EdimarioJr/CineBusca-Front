@@ -72,8 +72,8 @@ const Watchlist = () => {
     return () => {
       isMounted = false;
     };
-    //eslint-disable-next-line
-  }, []);
+    
+  }, [history]);
 
   return (
     <>

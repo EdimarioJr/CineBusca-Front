@@ -34,8 +34,7 @@ const SearchResults = () => {
             setTotalPages(response.total_pages);
             setMovies(response.results);
           } else {
-            const newMovies = [...movies, ...response.results];
-            setMovies(newMovies);
+            setMovies((oldMovies) => [...oldMovies, ...response.results]);
           }
         }
       });
@@ -44,7 +43,6 @@ const SearchResults = () => {
     return () => {
       isMounted = false;
     };
-    //eslint-disable-next-line
   }, [location.search, actualPage]);
 
   return (
@@ -61,9 +59,9 @@ const SearchResults = () => {
                     variants={opacityAnimation}
                     initial="initial"
                     animate="final"
+                    key={index}
                   >
                     <MovieCard
-                      key={index}
                       idMovie={movie.id}
                       poster={movie.poster_path}
                       title={movie.original_title}

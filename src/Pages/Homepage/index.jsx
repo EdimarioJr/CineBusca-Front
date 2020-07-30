@@ -21,12 +21,10 @@ function App() {
         if (page === 2) setMovies(response.results);
         // if page> 2, the movies will be pushed to the movies state, instead of be replaced after each query
         else {
-          const newMovies = [...movies, ...response.results];
-          setMovies(newMovies);
+          setMovies(oldMovies => [...oldMovies,...response.results]);
         }
       });
     })();
-    //eslint-disable-next-line
   }, [page]);
 
   return (
