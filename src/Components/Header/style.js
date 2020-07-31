@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CommonButton, FlexRowBetween } from "../../commonStyle";
+import { CommonButton } from "../../commonStyle";
 import { motion } from "framer-motion";
 
 export const DivSearch = styled.div`
@@ -24,13 +24,35 @@ export const DivSearch = styled.div`
     background-color: inherit;
     font-weight: 700;
   }
+
+  @media (max-width: 475px) {
+    width: 75%;
+    height: 30px;
+    input {
+      padding: 5px;
+    }
+  }
 `;
 
-export const HeaderRow = styled(FlexRowBetween)`
+export const HeaderRow = styled.header`
   margin: 10px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 
   img {
     width: 100px;
+  }
+
+  @media (max-width: 414px) {
+    flex-direction: column;
+
+    img {
+      width: 85px;
+      margin-bottom: 10px;
+    }
   }
 `;
 
@@ -40,6 +62,10 @@ export const InputsRow = styled.div`
   align-items: center;
   justify-content: space-evenly;
   width: 60%;
+
+  @media (max-width: 475px) {
+    width: 95%;
+  }
 `;
 
 export const WatchlistButton = styled(CommonButton)`

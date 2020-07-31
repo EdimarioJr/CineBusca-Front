@@ -34,4 +34,14 @@ export const MovieContainer = styled.div`
       white-space: nowrap;
     }
   }
+
+  @media(max-width: 475px){
+    width: 165px;
+    height: 330px;
+  }
+
+  @media (min-width: 476px) and (max-width: 1000px) {
+    width: 230px;
+    height: 450px;
+  }
 `;

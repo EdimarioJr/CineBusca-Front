@@ -9,11 +9,14 @@ import Loading from "../Loading";
 const CineCarousel = ({ idMovie }) => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   // fetch the movies Images.
   useEffect(() => {
     // prevent memory leaks, the component will only set the State if its mounted
     let isMounted = true;
+    // getting the window size
+    window.addEventListener("resize", handleResize);
     setIsLoading(true);
     async function fetchData() {
       idMovie && isMounted
@@ -30,8 +33,27 @@ const CineCarousel = ({ idMovie }) => {
 
     return () => {
       isMounted = false;
+      window.removeEventListener("resize", handleResize);
     };
   }, [idMovie]);
+
+  function handleResize() {
+    setWindowWidth(window.innerWidth);
+  }
+  // the number in the slides shown in the carousel depends on the screen width
+  function numberOfSlides() {
+    if (idMovie) {
+      return 1;
+    } else {
+      if (windowWidth <= 768) {
+        return 2;
+      }
+      if (windowWidth > 768 && windowWidth <= 1152) {
+        return 3;
+      }
+      return 4;
+    }
+  }
 
   return (
     <>
@@ -40,7 +62,7 @@ const CineCarousel = ({ idMovie }) => {
           <Loading />
         ) : (
           <Carousel
-            slidesToShow={idMovie ? 1 : 4}
+            slidesToShow={numberOfSlides()}
             swiping={true}
             defaultControlsConfig={{
               pagingDotsStyle: {

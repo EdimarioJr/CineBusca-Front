@@ -15,4 +15,23 @@ export const Main = styled.section`
     grid-gap: 10px;
     transition: all 0.5s;
   }
+
+  @media (max-width: 500px) {
+    .grid-movies {
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 5px;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin: 20px 0;
+    }
+  }
+
+  @media (min-width: 501px) and (max-width: 1000px) {
+    .grid-movies {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 10px;
+    }
+  }
 `;

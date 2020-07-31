@@ -24,10 +24,10 @@ const Header = (props) => {
         <InputsRow>
           <SearchInput />
           {isLogged ? (
-            <CommonButton onClick={handleLogout}>LOGOUT</CommonButton>
+            <CommonButton onClick={handleLogout}>Logout</CommonButton>
           ) : (
             <Link to="/login" style={{ textDecoration: "none" }}>
-              <CommonButton>SIGN IN</CommonButton>
+              <CommonButton>Sign in</CommonButton>
             </Link>
           )}
         </InputsRow>
