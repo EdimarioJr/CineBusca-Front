@@ -35,13 +35,18 @@ export const MovieContainer = styled.div`
     }
   }
 
-  @media(max-width: 475px){
+  @media (max-width: 475px) {
     width: 165px;
     height: 330px;
   }
 
-  @media (min-width: 476px) and (max-width: 1000px) {
+  @media (min-width: 476px) and (max-width: 1109px) {
     width: 230px;
+    height: 450px;
+  }
+
+  @media (min-width: 1110px) and (max-width: 1320px) {
+    width: 260px;
     height: 450px;
   }
 `;

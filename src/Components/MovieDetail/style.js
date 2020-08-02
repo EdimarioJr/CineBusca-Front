@@ -3,7 +3,6 @@ import { CommonButton } from "../../commonStyle";
 
 export const MovieContainer = styled.section`
   width: 100%;
-  height: 550px;
   display: grid;
   grid-template-columns: 1fr 4fr;
 
@@ -11,25 +10,37 @@ export const MovieContainer = styled.section`
     width: 400px;
     height: 550px;
   }
+
+  @media (max-width: 1000px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    #poster {
+      width: 55%;
+      height: 80%;
+      margin-bottom: 10px;
+    }
+  }
 `;
 
 export const BackgroundFilter = styled.div`
   width: 100%;
-  height: 550px;
+  height: 450px;
   background-image: url(${(props) => props.back});
   background-size: cover;
   position: absolute;
   filter: blur(15px);
   top: 0;
   left: 0;
-  z-index: 1;
 `;
 
 export const MovieInfo = styled.div`
+position: relative;
+  width: 100%;
   color: white;
-  position: relative;
-  z-index: 2;
   background-color: black;
+
   h2 {
     margin-bottom: 20px;
   }
@@ -45,18 +56,14 @@ export const MovieInfo = styled.div`
   }
 
   .info {
+    position: relative;
     margin: 20px 30px;
     height: 465px;
-    position: inherit;
-    z-index: 2;
     text-shadow: 1px 1px rgba(0, 0, 0, 0.5), -1px 1px rgba(0, 0, 0, 0.5),
       1px -1px rgba(0, 0, 0, 0.5), -1px -1px rgba(0, 0, 0, 0.5);
 
     .description {
-      position: inherit;
-      z-index: 2;
-      margin: 10px 0;
-      height: calc(100% - 190px);
+      height: 240px;
       line-height: 30px;
       text-overflow: ellipsis;
       overflow: auto;
@@ -64,17 +71,22 @@ export const MovieInfo = styled.div`
     }
 
     .genres {
-      position: inherit;
-      z-index: 2;
       display: flex;
       flex-direction: row;
       align-items: center;
-
+      flex-wrap: wrap;
+      z-index: 2;
       margin: 10px 0;
 
       p {
         margin-right: 15px;
       }
+
+      .genre-button{
+        margin-right: 15px;
+        margin-bottom: 5px;
+      }
+     
     }
   }
 
@@ -86,8 +98,6 @@ export const MovieInfo = styled.div`
   }
 
   .footer {
-    position: inherit;
-    z-index: 2;
     width: 100%;
     background-color: #2c2f38;
     padding: 10px 30px;
@@ -103,6 +113,52 @@ export const MovieInfo = styled.div`
       p {
         margin-right: 5px;
       }
+    }
+  }
+
+  @media (max-width: 767px) {
+    padding-top: 15px;
+
+    h1 {
+      font-size: 20px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+    #director {
+      font-size: 18px;
+    }
+
+    .info {
+      margin: 10px 10px;
+      height: 465px;
+      .description {
+        font-size: 15px;
+        line-height: 20px;
+        height: 250px;
+      }
+
+      .genres {
+        p {
+          margin-right: 10px;
+        }
+
+        .genre-button{
+          margin-right: 5px;
+        }
+      }
+    }
+
+    .footer {
+      padding: 10px 10px;
+      font-size: 10px;
+    }
+  }
+
+  @media (min-width: 1001px) and (max-width: 1100px) {
+    .footer {
+      font-size: 13px;
     }
   }
 `;
@@ -143,5 +199,9 @@ export const ReviewContainer = styled.section`
     height: 350px;
     margin-bottom: 15px;
     font-family: "Poppins", sans-serif;
+  }
+
+  @media (max-width: 500px) {
+    margin: 20px 5px;
   }
 `;

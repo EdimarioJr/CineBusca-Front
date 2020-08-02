@@ -9,8 +9,10 @@ export const CastContainer = styled.section`
     color: white;
     margin-top: 1 0px;
     margin-bottom: 20px;
-  }
+  } 
+
 `;
+
 export const CastCards = styled.div`
   display: flex;
   flex-direction: row;
@@ -30,6 +32,19 @@ export const CastCards = styled.div`
 
     p {
       padding: 5px 10px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .actorCard {
+      margin-right: 20px;
+      height: 250px;
+      width: 150px;
+
+      img {
+        width: 150px;
+        height: 160px;
+      }
     }
   }
 `;
@@ -58,5 +73,18 @@ export const RecommendationsContainer = styled.section`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
+  }
+
+  @media (max-width: 739px) {
+      .recommendation-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+  }
+
+  @media(min-width: 740px) and (max-width: 1000px){
+    .recommendation-grid{
+      grid-template-columns: repeat(3,1fr);
+    }
   }
 `;

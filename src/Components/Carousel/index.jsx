@@ -9,7 +9,7 @@ import Loading from "../Loading";
 const CineCarousel = ({ idMovie }) => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   // fetch the movies Images.
   useEffect(() => {

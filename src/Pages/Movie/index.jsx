@@ -9,18 +9,20 @@ import Carousel from "../../Components/Carousel";
 import Cast from "./Cast";
 import Recommendations from "./Recommendations";
 import Loading from "../../Components/Loading";
-import Footer from '../../Components/Footer'
+import Footer from "../../Components/Footer";
 
 const Movie = (props) => {
   const [movie, setMovie] = useState(null);
   const [director, setDirector] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const idMovie = props.match.params.id;
 
   useEffect(() => {
     (async () => {
       // everytimes the movie is changed , will scroll to the top,fetch the data from the new movie and render the
       // loading component
+      window.addEventListener("resize", handleResize);
       setIsLoading(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
       await MovieData.getMovie(idMovie).then((response) => {
@@ -28,7 +30,13 @@ const Movie = (props) => {
         setIsLoading(false);
       });
     })();
+
+    return () => window.removeEventListener("resize", handleResize);
   }, [idMovie]);
+
+  function handleResize() {
+    setWindowWidth(window.innerWidth);
+  }
 
   return (
     <>
@@ -39,9 +47,14 @@ const Movie = (props) => {
             <>
               <MovieDetail movieInfo={{ ...movie, director }} />
               <Cast putDirector={setDirector} idMovie={idMovie} />
-              <Gallery>
-                <Carousel idMovie={idMovie} />
-              </Gallery>
+              {windowWidth >= 768 ? (
+                <Gallery>
+                  <Carousel idMovie={idMovie} />
+                </Gallery>
+              ) : (
+                ""
+              )}
+
               <Recommendations
                 idMovie={idMovie}
                 movieTitle={movie.original_title}
@@ -54,7 +67,7 @@ const Movie = (props) => {
           <Loading />
         )}
       </ContainerPages>
-      <Footer/>
+      <Footer />
     </>
   );
 };

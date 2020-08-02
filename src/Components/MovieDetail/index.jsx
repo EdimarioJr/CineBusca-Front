@@ -124,9 +124,10 @@ const MovieDetail = (props) => {
                   <p className="description">{overview}</p>
 
                   <div className="genres">
-                    <p>Genres :</p>
+                    <p>Genres:</p>
+
                     {genres.map((genre, index) => (
-                      <CommonButton style={{ marginRight: "10px" }} key={index}>
+                      <CommonButton key={index} className="genre-button">
                         {genre.name}
                       </CommonButton>
                     ))}

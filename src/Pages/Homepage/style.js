@@ -16,7 +16,7 @@ export const Main = styled.section`
     transition: all 0.5s;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 735px) {
     .grid-movies {
       grid-template-columns: repeat(2, 1fr);
       grid-gap: 5px;
@@ -28,10 +28,9 @@ export const Main = styled.section`
     }
   }
 
-  @media (min-width: 501px) and (max-width: 1000px) {
+  @media (min-width: 736px) and (max-width: 979px) {
     .grid-movies {
       grid-template-columns: repeat(3, 1fr);
-      grid-gap: 10px;
     }
   }
 `;
