@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LoginContainer } from "./style";
 import { useHistory } from "react-router-dom";
-import { Container, CommonButton } from "../../commonStyle";
+import { ContainerPages, CommonButton } from "../../commonStyle";
 import Header from "../../Components/Header";
 import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
@@ -53,7 +53,7 @@ const Login = () => {
   return (
     <>
       <Header />
-      <Container>
+      <ContainerPages style={{minHeight: 'calc(100vh - 278px)'}}>
         <motion.div variants={loginVariants} initial="initial" animate="final">
           <LoginContainer>
             <div className="card">
@@ -80,7 +80,7 @@ const Login = () => {
                   />
                 </div>
               </form>
-              <CommonButton onClick={handleSubmit}>
+              <CommonButton className="signButton" onClick={handleSubmit}>
                 {signUp ? "Sign up" : "Sign in"}
               </CommonButton>
               <p>
@@ -96,7 +96,7 @@ const Login = () => {
             </div>
           </LoginContainer>
         </motion.div>
-      </Container>
+      </ContainerPages>
       <Footer/>
     </>
   );

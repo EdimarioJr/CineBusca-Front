@@ -32,6 +32,12 @@ export const ReviewContainer = styled(motion.section)`
     p {
       height: calc(100% - 130px);
       font-weight: 500;
+      overflow: auto;
+      margin-bottom: 10px;
     }
+  }
+
+  @media(max-width: 767px){
+    height: 250px;
   }
 `;

@@ -18,6 +18,10 @@ export const LoginContainer = styled.main`
     align-items: center;
     justify-content: center;
 
+    .signButton{
+      padding: 20px 30px;
+    }
+
     div {
       margin-bottom: 20px;
     }
@@ -44,6 +48,28 @@ export const LoginContainer = styled.main`
       color: #107ee5;
       margin-left: 10px;
       cursor:pointer;
+    }
+
+  }
+
+  @media(max-width: 475px){
+    .card{
+      width: 350px;
+      height: 400px;
+
+      form{
+        width: 80%;
+      }
+
+      .signButton{
+        padding: 20px;
+      }
+    }
+  }
+
+  @media(min-width: 476px) and (max-width: 538px){
+    .card{
+      width: 420px;
     }
   }
 `;

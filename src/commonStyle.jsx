@@ -43,6 +43,7 @@ export const Container = styled.div`
 
 export const ContainerPages = styled(Container)`
   min-height: calc(100vh - 345px);
+
 `;
 
 export const FlexRowBetween = styled(motion.div)`
