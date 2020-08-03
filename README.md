@@ -35,7 +35,7 @@ The project was made for studies purposes, and to be part of my portfolio.
    - [Mongo Atlas](https://www.mongodb.com/cloud/atlas) - Storage Service
    - [Jwt](https://jwt.io/) - Authenticity token
 
-Contact me on [LinkedIn]
+Contact me on [LinkedIn](https://www.linkedin.com/in/edim%C3%A1rio-silva-moura-j%C3%BAnior-3a88561a5/)
 Thank you!
 
 ### License
