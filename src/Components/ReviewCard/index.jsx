@@ -15,7 +15,6 @@ const ReviewCard = ({ idMovie, date, review, deleteReview }) => {
     (async () => {
       await MovieData.getMovie(idMovie).then((response) => setMovie(response));
     })();
-    console.log(typeof date)
   }, [idMovie]);
 
   async function handleDelete() {
@@ -48,7 +47,7 @@ const ReviewCard = ({ idMovie, date, review, deleteReview }) => {
         />
         <div className="movieInfo">
           <h3>{movie.original_title}</h3>
-          <h4>{date}</h4>
+          <h4>{date.slice(0,10)}</h4>
           <p>{review}</p>
           <CommonButton onClick={handleDelete}>Delete review</CommonButton>
         </div>
