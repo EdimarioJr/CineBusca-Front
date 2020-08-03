@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../Components/Header";
 import ReviewCard from "../../Components/ReviewCard";
-import { ContainerPages } from "../../commonStyle";
+import { ContainerPages,opacityAnimation } from "../../commonStyle";
 import dbAPI from "../../services/dbAPI";
 import auth from "../../services/auth";
 import { useHistory } from "react-router-dom";
 import { ReviewsContainer } from "./style";
-import { opacityAnimation } from "../../commonStyle";
 import Loading from "../../Components/Loading";
 import Footer from '../../Components/Footer'
 

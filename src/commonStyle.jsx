@@ -59,7 +59,7 @@ export const CommonButton = styled.button`
   align-items: center;
   justify-content: center;
   background-color: #107ee5;
-  padding: 15px 20px;
+  padding: 0 30px;
   color: white;
   font-weight: 700;
   height: 35px;

@@ -19,7 +19,7 @@ export const LoginContainer = styled.main`
     justify-content: center;
 
     .signButton{
-      padding: 20px 30px;
+      padding: 0px 30px;
     }
 
     div {
@@ -62,7 +62,7 @@ export const LoginContainer = styled.main`
       }
 
       .signButton{
-        padding: 20px;
+        padding: 0px 20px;
       }
     }
   }

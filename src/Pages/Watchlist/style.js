@@ -24,6 +24,7 @@ export const WatchlistContainer = styled.main`
   @media (max-width: 758px) {
     .grid {
       grid-template-columns: repeat(2, 1fr);
+      grid-gap: 10px;
     }
   }
   @media (min-width: 759px) and (max-width: 1013px) {
