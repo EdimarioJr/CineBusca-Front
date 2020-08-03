@@ -63,7 +63,7 @@ const Reviews = () => {
                     exit={{ opacity: 0 }}
                     idMovie={review.idMovie}
                     review={review.review}
-                    date={review.date}
+                    date={String(review.date)}
                     deleteReview={handleDeleteReview}
                     key={index}
                   />
