@@ -10,12 +10,12 @@ import { ReviewContainer } from "./style";
 const ReviewCard = ({ idMovie, date, review, deleteReview }) => {
   const [movie, setMovie] = useState("");
   const history = useHistory();
-  date = date.slice(0, 10).replaceAll("-", "/");
 
   useEffect(() => {
     (async () => {
       await MovieData.getMovie(idMovie).then((response) => setMovie(response));
     })();
+    console.log(typeof date)
   }, [idMovie]);
 
   async function handleDelete() {
