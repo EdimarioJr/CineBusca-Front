@@ -10,6 +10,7 @@ import { ReviewContainer } from "./style";
 const ReviewCard = ({ idMovie, date, review, deleteReview }) => {
   const [movie, setMovie] = useState("");
   const history = useHistory();
+  date = date.slice(0, 10).replaceAll("-", "/");
 
   useEffect(() => {
     (async () => {
@@ -19,18 +20,17 @@ const ReviewCard = ({ idMovie, date, review, deleteReview }) => {
 
   async function handleDelete() {
     if (auth.isAuthenticated()) {
-     const response =  await dbAPI.delete("/reviews", {
+      const response = await dbAPI.delete("/reviews", {
         params: {
           idMovie,
         },
       });
-      if(response.data.review) 
-        deleteReview(idMovie);
+      if (response.data.review) deleteReview(idMovie);
       else {
         // if the token expires will enter in this else
-        alert(response.data.message)
-        auth.logout()
-        history.push("/")
+        alert(response.data.message);
+        auth.logout();
+        history.push("/");
       }
     } else {
       // if there is no token in the sessionStorage
@@ -48,7 +48,7 @@ const ReviewCard = ({ idMovie, date, review, deleteReview }) => {
         />
         <div className="movieInfo">
           <h3>{movie.original_title}</h3>
-          <h4>{date.slice(0, 9).replaceAll("-", "/")}</h4>
+          <h4>{date}</h4>
           <p>{review}</p>
           <CommonButton onClick={handleDelete}>Delete review</CommonButton>
         </div>
