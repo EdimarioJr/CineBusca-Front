@@ -1,68 +1,43 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## CineBusca App
 
-In the project directory, you can run:
+![cinebusca1](https://user-images.githubusercontent.com/32523401/89212227-7ea9ef00-d599-11ea-85e7-6e02e2bede29.PNG)
 
-### `yarn start`
+### About this project
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The idea of the App is:
+"Find your next movie or create your watchlist with this App. It include rating, actors and anything you need to know about the movie."
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The project was made for studies purposes, and to be part of my portfolio.
 
-### `yarn test`
+### The user stories:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   - User can see all the latest movie on the front page
+   - User scroll down to see all other movies according to popularity
+   - User can click on any of the movie to go to their own separate page
+   - User can then see all about the movie ratings, about, actors present on each separate movie page
+   - User can see recommended movies based in the movie he clicked on the separated movie page
+   - User can create an account
+   - User can create their own watch list
+   - User can review movies
 
-### `yarn build`
+### Observations:
+   1. The data about all movies was taken from the [Movie DB Api](https://developers.themoviedb.org/3)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Built with:
+   - [React](https://pt-br.reactjs.org/) - Build the interfaces
+   - [React Router](https://reactrouter.com/) - Routes
+   - [Axios](https://github.com/axios/axios) - HTTP Client
+   - [Styled Components](https://styled-components.com/) - Styles
+   - [Framer Motion](https://www.framer.com/motion/) - Animating
+   - [Nuka Carousel](https://github.com/FormidableLabs/nuka-carousel) - Carousel Component
+   - [Prettier](https://prettier.io/) - Code Formatter
+   - [Mongo Atlas](https://www.mongodb.com/cloud/atlas) - Storage Service
+   - [Jwt](https://jwt.io/) - Authenticity token
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Contact me on [LinkedIn]
+Thank you!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### License
+    This project do not have a license.
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
